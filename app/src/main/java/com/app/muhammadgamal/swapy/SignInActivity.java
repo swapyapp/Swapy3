@@ -15,13 +15,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SignInActivity extends AppCompatActivity {
 
     TextView signUpText;
     Button signInButton;
     EditText editTextEmail, editTextPassword;
-    FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth mAuth;
 
     @Override
@@ -30,16 +30,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(SignInActivity.this, NavDrawerActivity.class));
-                }
-
-            }
-        };
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
@@ -108,7 +99,19 @@ public class SignInActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //if user is already logged in then HomeFragment will open instead of SignInActivity
-        mAuth.addAuthStateListener(mAuthStateListener);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            Intent intent = new Intent(SignInActivity.this, NavDrawerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
