@@ -11,20 +11,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.app.muhammadgamal.swapy.R;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NavDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private DrawerLayout drawer;
-    private TextView receivedSwapRequests, sentSwapRequests, acceptedSwapRequests;
+    private TextView receivedSwapRequests, sentSwapRequests, acceptedSwapRequests, navUsername;
+    private FirebaseAuth mAuth;
+    private CircleImageView userNavImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
+
+        mAuth = FirebaseAuth.getInstance();
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -35,6 +45,11 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerLayout =
+                navigationView.inflateHeaderView(R.layout.nav_header);
+        userNavImage = (CircleImageView)headerLayout.findViewById(R.id.nav_user_img);
+        navUsername = (TextView)headerLayout.findViewById(R.id.nav_user_name);
 
         //handle the toggle animation
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -60,8 +75,29 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         acceptedSwapRequests = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.nav_acceptedSwapRequests));
 
-
+        //handle the counter in the nav drawer
         initializeCountDrawer();
+
+        loadUserInfo();
+
+    }
+
+    //load user info in the header of nav drawer
+    private void loadUserInfo(){
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null){
+
+            if (user.getPhotoUrl() != null){
+                Glide.with(this)
+                        .load(user.getPhotoUrl().toString())
+                        .into(userNavImage);
+            }
+            if (user.getDisplayName() != null){
+                navUsername.setText(user.getDisplayName());
+            }
+
+        }
 
     }
 
