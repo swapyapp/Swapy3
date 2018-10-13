@@ -33,4 +33,77 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="swap">Swap</string>
     <string name="filter">Filter</string>
+
+    <string-array name="company">
+        <item>Choose company</item>
+        <item>Vodafone</item>
+        <item>Raya</item>
+        <item>Etisalat</item>
+    </string-array>
+    <string-array name="branch">
+        <item>Choose branch</item>
+        <item>Vodafone uk</item>
+        <item>Raya smart village</item>
+        <item>Etisalat maadi</item>
+    </string-array>
+    <string-array name="account">
+        <item>Choose account</item>
+        <item>HS</item>
+        <item>HS</item>
+        <item>HS</item>
+    </string-array>
+    <string-array name="current_Shift">
+        <item>Current Shift</item>
+        <item>12:00</item>
+        <item>12:30</item>
+        <item>01:00</item>
+        <item>01:30</item>
+        <item>02:00</item>
+        <item>02:30</item>
+        <item>03:00</item>
+        <item>03:30</item>
+        <item>04:00</item>
+        <item>04:30</item>
+        <item>05:00</item>
+        <item>05:30</item>
+        <item>06:00</item>
+        <item>06:30</item>
+        <item>07:00</item>
+        <item>07:30</item>
+        <item>08:00</item>
+        <item>08:30</item>
+        <item>09:00</item>
+        <item>09:30</item>
+        <item>10:00</item>
+        <item>10:30</item>
+        <item>11:00</item>
+        <item>11:30</item>
+    </string-array>
+    <string-array name="Preferred_Shift">
+        <item>Preferred Shift</item>
+        <item>12:00</item>
+        <item>12:30</item>
+        <item>01:00</item>
+        <item>01:30</item>
+        <item>02:00</item>
+        <item>02:30</item>
+        <item>03:00</item>
+        <item>03:30</item>
+        <item>04:00</item>
+        <item>04:30</item>
+        <item>05:00</item>
+        <item>05:30</item>
+        <item>06:00</item>
+        <item>06:30</item>
+        <item>07:00</item>
+        <item>07:30</item>
+        <item>08:00</item>
+        <item>08:30</item>
+        <item>09:00</item>
+        <item>09:30</item>
+        <item>10:00</item>
+        <item>10:30</item>
+        <item>11:00</item>
+        <item>11:30</item>
+    </string-array>
 </resources>

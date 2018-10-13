@@ -15,7 +15,7 @@
         android:layout_gravity="center_vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/nav_user_img"
+            android:id="@+id/userNavImage"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/male_circle_512" />
@@ -29,7 +29,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/nav_user_name"
+                android:id="@+id/navUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Muhammad Gamal"
@@ -38,11 +38,19 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/nav_user_company"
+                android:id="@+id/navUserCompany"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="Vodafone"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/navUserCurrentShift"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Current Shift: 10:30 AM"
                 android:textColor="#ffffff" />
 
         </LinearLayout>

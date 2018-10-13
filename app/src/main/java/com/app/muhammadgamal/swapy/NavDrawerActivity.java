@@ -18,6 +18,12 @@ import com.app.muhammadgamal.swapy.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,7 +31,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
 
 
     private DrawerLayout drawer;
-    private TextView receivedSwapRequests, sentSwapRequests, acceptedSwapRequests, navUsername;
+    private TextView receivedSwapRequests, sentSwapRequests, acceptedSwapRequests, navUsername, navUserCompany, navUserCurrentShift;
     private FirebaseAuth mAuth;
     private CircleImageView userNavImage;
 
@@ -48,8 +54,10 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
 
         View headerLayout =
                 navigationView.inflateHeaderView(R.layout.nav_header);
-        userNavImage = (CircleImageView)headerLayout.findViewById(R.id.nav_user_img);
-        navUsername = (TextView)headerLayout.findViewById(R.id.nav_user_name);
+        userNavImage = (CircleImageView) headerLayout.findViewById(R.id.userNavImage);
+        navUsername = (TextView) headerLayout.findViewById(R.id.navUsername);
+        navUserCompany = (TextView) headerLayout.findViewById(R.id.navUserCompany);
+        navUserCurrentShift = (TextView) headerLayout.findViewById(R.id.navUserCurrentShift);
 
         //handle the toggle animation
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -83,21 +91,29 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
     }
 
     //load user info in the header of nav drawer
-    private void loadUserInfo(){
+    private void loadUserInfo() {
 
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null){
-
-            if (user.getPhotoUrl() != null){
-                Glide.with(this)
-                        .load(user.getPhotoUrl().toString())
-                        .into(userNavImage);
+        final String userId = mAuth.getCurrentUser().getUid();
+        DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        currentUserDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user.getmProfilePhotoURL() != null) {
+                    Glide.with(NavDrawerActivity.this)
+                            .load(user.getmProfilePhotoURL())
+                            .into(userNavImage);
+                }
+                navUsername.setText(user.getmUsername());
+                navUserCompany.setText(user.getmBranch() + ", " + user.getmAccount());
+                navUserCurrentShift.setText("Current Shift: " + user.getmCurrentShift());
             }
-            if (user.getDisplayName() != null){
-                navUsername.setText(user.getDisplayName());
-            }
 
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -181,6 +197,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 
@@ -197,4 +214,5 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         initializeCountDrawer();
         super.onResume();
     }
+
 }

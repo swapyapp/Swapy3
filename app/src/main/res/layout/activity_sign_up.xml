@@ -12,14 +12,29 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImageSignUp"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/male_circle_512" />
+            android:layout_marginTop="8dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userImageSignUp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/male_circle_512" />
+
+            <ProgressBar
+                android:id="@+id/progressBarImg"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/editTextName"
@@ -98,17 +113,84 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="8dp" />
 
-        <Spinner
-            android:id="@+id/spinnerCurrentShift"
+        <LinearLayout
             android:layout_width="265dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/currentShiftSpinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.6">
+
+            </Spinner>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:id="@+id/currentTimeAM"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/selection_background"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/currentTimeAMText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/am"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:id="@+id/currentTimePM"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/selection_background_light"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/currentTimePMText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pm"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp">
 
             <Button
                 android:id="@+id/buttonSignUp"
