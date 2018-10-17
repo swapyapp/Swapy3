@@ -1,4 +1,4 @@
-package com.app.muhammadgamal.swapy;
+package com.app.muhammadgamal.swapy.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 
 import com.app.muhammadgamal.swapy.R;
 
-public class AccountFragment extends Fragment {
+public class ReceivedSwapFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle("Account");
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        getActivity().setTitle("Received swap requests");
+        return inflater.inflate(R.layout.fragment_received_swap, container, false);
     }
 }

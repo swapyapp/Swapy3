@@ -2,9 +2,8 @@ package com.app.muhammadgamal.swapy.SpinnersLestiners;
 
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
-import com.app.muhammadgamal.swapy.SignUpActivity;
+import com.app.muhammadgamal.swapy.Activities.SignUpActivity;
 
 public class CurrentShiftSpinnerLestiner implements AdapterView.OnItemSelectedListener {
 
@@ -20,6 +19,7 @@ public class CurrentShiftSpinnerLestiner implements AdapterView.OnItemSelectedLi
             CurrentShift = parent.getItemAtPosition(position).toString();
         }
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {

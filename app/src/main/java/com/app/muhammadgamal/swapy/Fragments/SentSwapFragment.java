@@ -1,4 +1,4 @@
-package com.app.muhammadgamal.swapy;
+package com.app.muhammadgamal.swapy.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 
 import com.app.muhammadgamal.swapy.R;
 
-public class SettingsFragment extends Fragment {
+public class SentSwapFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle("Settings");
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        getActivity().setTitle("Sent swap requests");
+        return inflater.inflate(R.layout.fragment_sent_swap, container, false);
     }
 }

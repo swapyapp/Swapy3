@@ -2,9 +2,8 @@ package com.app.muhammadgamal.swapy.SpinnersLestiners;
 
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
-import com.app.muhammadgamal.swapy.SignUpActivity;
+import com.app.muhammadgamal.swapy.Activities.SignUpActivity;
 
 public class AccountSpinnerLestiner implements AdapterView.OnItemSelectedListener {
 

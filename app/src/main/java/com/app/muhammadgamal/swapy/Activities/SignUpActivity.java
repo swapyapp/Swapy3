@@ -1,4 +1,4 @@
-package com.app.muhammadgamal.swapy;
+package com.app.muhammadgamal.swapy.Activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,14 +31,13 @@ import com.app.muhammadgamal.swapy.SpinnersLestiners.AccountSpinnerLestiner;
 import com.app.muhammadgamal.swapy.SpinnersLestiners.BranchSpinnerLestiner;
 import com.app.muhammadgamal.swapy.SpinnersLestiners.CompanySpinnerLestiner;
 import com.app.muhammadgamal.swapy.SpinnersLestiners.CurrentShiftSpinnerLestiner;
+import com.app.muhammadgamal.swapy.SwapData.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -46,11 +45,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity  {
 
     // 0 => chosen
     // 1 => not chosen
@@ -78,10 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         Resources res = getResources();
 
-        companySpinner();
-        currentShiftSpinner();
-        accountSpinner();
-        branchSpinner();
+
 
         signInText = (TextView) findViewById(R.id.signInText);
         signInText.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +94,13 @@ public class SignUpActivity extends AppCompatActivity {
         editTextConfirmPassword = (EditText) findViewById(R.id.editTextConfirmPassword);
         currentTimePMText = (TextView) findViewById(R.id.currentTimePMText);
         currentTimeAMText = (TextView) findViewById(R.id.currentTimeAMText);
+        spinnerCompany = (Spinner) findViewById(R.id.spinnerCompany);
+        spinnerCompanyBranch = (Spinner) findViewById(R.id.spinnerCompanyBranch);
+
+        companySpinner();
+        currentShiftSpinner();
+        accountSpinner();
+        branchSpinner();
 
         final Drawable notSelectedBackground = res.getDrawable(R.drawable.selection_background_light);
         final Drawable SelectedBackground = res.getDrawable(R.drawable.selection_background);
@@ -150,8 +151,9 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void companySpinner() {
-        spinnerCompany = findViewById(R.id.spinnerCompany);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.company, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCompany.setAdapter(adapter);
@@ -159,11 +161,24 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void branchSpinner() {
-        spinnerCompanyBranch = findViewById(R.id.spinnerCompanyBranch);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.branch, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCompanyBranch.setAdapter(adapter);
-        spinnerCompanyBranch.setOnItemSelectedListener(new BranchSpinnerLestiner());
+//        if (CompanySpinnerLestiner.VODAFONE == 1){
+//            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.vodafone_branch, android.R.layout.simple_spinner_item);
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            spinnerCompanyBranch.setAdapter(adapter);
+//            spinnerCompanyBranch.setOnItemSelectedListener(new BranchSpinnerLestiner());
+//        }
+//        if (CompanySpinnerLestiner.RAYA == 1){
+//            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.raya_branch, android.R.layout.simple_spinner_item);
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            spinnerCompanyBranch.setAdapter(adapter);
+//            spinnerCompanyBranch.setOnItemSelectedListener(new BranchSpinnerLestiner());
+//        }
+//        else {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.branch, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerCompanyBranch.setAdapter(adapter);
+            spinnerCompanyBranch.setOnItemSelectedListener(new BranchSpinnerLestiner());
+//        }
     }
 
     private void accountSpinner() {
@@ -195,10 +210,12 @@ public class SignUpActivity extends AppCompatActivity {
         User user;
         DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
         if (profileImageUrl != null) {
-            user = new User(username, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift + AMorPM, profileImageUrl);
+            signUpButton.setVisibility(View.GONE);
+            user = new User(username, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift + AMorPM, profileImageUrl, 0,0,0);
             currentUserDb.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+                    signUpButton.setVisibility(View.VISIBLE);
                     USER_INFO_SAVED = 1;
                     Intent intent = new Intent(SignUpActivity.this, NavDrawerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -207,15 +224,18 @@ public class SignUpActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    signUpButton.setVisibility(View.VISIBLE);
                     USER_INFO_SAVED = 0;
                     Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         } else {
-            user = new User(username, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift, null);
+            signUpButton.setVisibility(View.GONE);
+            user = new User(username, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift, null, 0,0,0);
             currentUserDb.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+                    signUpButton.setVisibility(View.VISIBLE);
                     USER_INFO_SAVED = 1;
                     Intent intent = new Intent(SignUpActivity.this, NavDrawerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -224,6 +244,7 @@ public class SignUpActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    signUpButton.setVisibility(View.VISIBLE);
                     USER_INFO_SAVED = 0;
                     Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
@@ -410,4 +431,6 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     }
+
+
 }

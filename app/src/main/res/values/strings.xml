@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Swapy</string>
     <string name="company">Company</string>
     <string name="account">Account</string>
@@ -33,6 +34,22 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="swap">Swap</string>
     <string name="filter">Filter</string>
+    <string name="shift_time">04:00 PM</string>
+    <string name="swap_time">Swap time: </string>
+    <string name="prefered_shift">Prefered Shift: </string>
+    <string name="shift_day">Shift day: </string>
+    <string name="shift_date">Shift Date: </string>
+    <string name="done">done</string>
+    <string name="swap_main_text">Create Swap</string>
+    <string name="back">back</string>
+    <string name="save">save</string>
+    <string name="your_current_shift">Your current shift</string>
+    <string name="day">Day</string>
+    <string name="date">Date</string>
+    <string name="example_date">Example: 31/12</string>
+    <string name="time">Time</string>
+    <string name="team_leader">Team leader</string>
+    <string name="your_team_leader_s_name">Your team leader\'s name</string>
 
     <string-array name="company">
         <item>Choose company</item>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -67,14 +68,16 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add_swap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_input_add"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="0dp"
-            android:layout_marginBottom="20dp"/>
+            android:src="@drawable/ic_add_white_24dp"
+            app:backgroundTint="@color/colorPrimaryDark"/>
 
         <ListView
             android:id="@+id/homeList"

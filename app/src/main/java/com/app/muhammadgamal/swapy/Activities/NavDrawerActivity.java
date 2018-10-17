@@ -1,4 +1,4 @@
-package com.app.muhammadgamal.swapy;
+package com.app.muhammadgamal.swapy.Activities;
 
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -14,11 +14,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.app.muhammadgamal.swapy.Fragments.AcceptedSwapFragment;
+import com.app.muhammadgamal.swapy.Fragments.AccountFragment;
+import com.app.muhammadgamal.swapy.Fragments.HomeFragment;
+import com.app.muhammadgamal.swapy.Fragments.ReceivedSwapFragment;
+import com.app.muhammadgamal.swapy.Fragments.SentSwapFragment;
+import com.app.muhammadgamal.swapy.Fragments.SettingsFragment;
 import com.app.muhammadgamal.swapy.R;
+import com.app.muhammadgamal.swapy.SwapData.User;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -100,13 +105,15 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 if (user.getmProfilePhotoURL() != null) {
-                    Glide.with(NavDrawerActivity.this)
-                            .load(user.getmProfilePhotoURL())
-                            .into(userNavImage);
+                    Glide.with(NavDrawerActivity.this).load(user.getmProfilePhotoURL()).into(userNavImage);
                 }
                 navUsername.setText(user.getmUsername());
                 navUserCompany.setText(user.getmBranch() + ", " + user.getmAccount());
                 navUserCurrentShift.setText("Current Shift: " + user.getmCurrentShift());
+                receivedSwapRequests.setText(String.valueOf(user.getmReceivedRequests()));
+                sentSwapRequests.setText(String.valueOf(user.getmSentRequests()));
+                acceptedSwapRequests.setText(String.valueOf(user.getmAcceptedRequests()));
+
             }
 
             @Override
@@ -178,17 +185,14 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
         receivedSwapRequests.setTypeface(null, Typeface.BOLD);
         receivedSwapRequests.setTextColor(getResources().getColor(R.color.red));
         //count is added
-        receivedSwapRequests.setText("99+");
         sentSwapRequests.setGravity(Gravity.CENTER_VERTICAL);
         sentSwapRequests.setTypeface(null, Typeface.BOLD);
         sentSwapRequests.setTextColor(getResources().getColor(R.color.red));
         //count is added
-        sentSwapRequests.setText("20");
         acceptedSwapRequests.setGravity(Gravity.CENTER_VERTICAL);
         acceptedSwapRequests.setTypeface(null, Typeface.BOLD);
         acceptedSwapRequests.setTextColor(getResources().getColor(R.color.red));
         //count is added
-        acceptedSwapRequests.setText("7");
     }
 
     @Override

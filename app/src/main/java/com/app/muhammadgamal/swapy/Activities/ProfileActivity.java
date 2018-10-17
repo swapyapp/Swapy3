@@ -1,4 +1,4 @@
-package com.app.muhammadgamal.swapy;
+package com.app.muhammadgamal.swapy.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
