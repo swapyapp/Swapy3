@@ -49,7 +49,7 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
         TextView swapperShiftDate = convertView.findViewById(R.id.swapper_shift_date);
         Button homeSwapButton = convertView.findViewById(R.id.btnHomeSwapList);
 
-        String userId="";
+        String userId = "";
         if (swapBody != null) {
             swapperShiftTime.setText(swapBody.getSwapperShiftTime());
             swapperShiftDay.setText(swapBody.getSwapperShiftDay());
@@ -62,11 +62,11 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                if (user.getmProfilePhotoURL() != null){
+                if (user.getmProfilePhotoURL() != null) {
                     Glide.with(swapperImage.getContext())
                             .load(user.getmProfilePhotoURL())
                             .into(swapperImage);
-                }else {
+                } else {
                     // set the swapper Image to default if no image provided
                     Resources resources = context.getResources();
                     Drawable photoUrl = resources.getDrawable(R.drawable.male_circle_512);
