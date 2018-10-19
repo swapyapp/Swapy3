@@ -29,7 +29,9 @@
         <activity
             android:name=".Activities.NavDrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.SwapCreationActivity"></activity>
+        <activity
+            android:name=".Activities.SwapCreationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -21,6 +21,7 @@ import com.app.muhammadgamal.swapy.R;
 import com.app.muhammadgamal.swapy.SwapData.SwapAdapter;
 import com.app.muhammadgamal.swapy.SwapData.SwapDetails;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,18 +63,34 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        ValueEventListener mValueEventListener = new ValueEventListener() {
+        ChildEventListener mChildEventListener = new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 SwapDetails swapDetails = dataSnapshot.getValue(SwapDetails.class);
                 swapAdapter.add(swapDetails);
             }
 
             @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         };
-        mSwapDataBaseReference.addValueEventListener(mValueEventListener);
+        mSwapDataBaseReference.addChildEventListener(mChildEventListener);
 
         List<SwapDetails> swapBodyList = new ArrayList<>();
         swapAdapter = new SwapAdapter(getContext(), R.layout.home_list_item,swapBodyList);

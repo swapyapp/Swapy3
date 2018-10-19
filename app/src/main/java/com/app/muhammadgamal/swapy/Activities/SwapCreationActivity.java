@@ -1,5 +1,6 @@
 package com.app.muhammadgamal.swapy.Activities;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -124,7 +125,9 @@ public class SwapCreationActivity extends AppCompatActivity {
         img_back_creation_body.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavUtils.navigateUpFromSameTask(getParent());
+                Intent intent = new Intent(getApplicationContext(), NavDrawerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
         img_save_creation_body = (ImageView) findViewById(R.id.img_save_creation_body);

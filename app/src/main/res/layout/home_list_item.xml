@@ -58,7 +58,6 @@
                     android:id="@+id/swapper_shift_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/raleway_semi_bold"
                     android:textColor="#000000"
                     android:textSize="14sp"
                     android:layout_marginRight="4dp"
@@ -80,7 +79,6 @@
                 android:id="@+id/swapper_shift_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/raleway_semi_bold"
                 android:textSize="12sp"
                 tools:text="18/10/2018" />
 
@@ -95,13 +93,12 @@
                     android:layout_marginRight="8dp"
                     android:fontFamily="@font/raleway_semi_bold"
                     android:textSize="12sp"
-                    tools:text="Prefered Shift :" />
+                    android:text="@string/preferred_shift" />
 
                 <TextView
                     android:id="@+id/swapper_preferred_shift"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/raleway_semi_bold"
                     android:textSize="12sp"
                     tools:text="02:00" />
 
