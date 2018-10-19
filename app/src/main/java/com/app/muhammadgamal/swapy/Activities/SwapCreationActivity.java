@@ -52,10 +52,10 @@ public class SwapCreationActivity extends AppCompatActivity {
         final Drawable notSelectedBackground = res.getDrawable(R.drawable.selection_background_light);
         final Drawable SelectedBackground = res.getDrawable(R.drawable.selection_background);
 
+        mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("swaps").child(userId);
-        mAuth = FirebaseAuth.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("swaps");
 
         edit_text_shift_date = (EditText) findViewById(R.id.edit_text_shift_date);
         edit_text_team_leader_name = (EditText) findViewById(R.id.edit_text_team_leader_name);
@@ -197,9 +197,11 @@ public class SwapCreationActivity extends AppCompatActivity {
         }
         SwapDetails SwapDetails = new SwapDetails(userId, shiftDay, shiftDate, shiftTime, teamLeader, preferredShift);
         creation_body_progress_bar.setVisibility(View.VISIBLE);
+        img_save_creation_body.setVisibility(View.GONE);
         databaseReference.push().setValue(SwapDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                img_save_creation_body.setVisibility(View.VISIBLE);
                 creation_body_progress_bar.setVisibility(View.GONE);
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Swap added successfully", Toast.LENGTH_SHORT).show();

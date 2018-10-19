@@ -80,12 +80,12 @@
             app:backgroundTint="@color/colorPrimaryDark"/>
 
         <ListView
+            android:background="#fafafa"
             android:id="@+id/homeList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:divider="@null" />
 
         <!-- only visible when the list has no items. -->
         <TextView

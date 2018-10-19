@@ -15,16 +15,16 @@ public class SwapDetails {
     public SwapDetails() {
     }
 
-    public SwapDetails(String swapperImageUrl, String swapperTl, String swapperShiftTime, String swapperShiftDay,
-                       String swapperPreferredShift, String swapperPhone, String swapShiftDate) {
-        this.swapperImageUrl = swapperImageUrl;
-        this.swapperTl = swapperTl;
-        this.swapperShiftTime = swapperShiftTime;
-        this.swapperShiftDay = swapperShiftDay;
-        this.swapperPreferredShift = swapperPreferredShift;
-        this.swapperPhone = swapperPhone;
-        this.swapShiftDate = swapShiftDate;
-    }
+//    public SwapDetails(String swapperImageUrl, String swapperTl, String swapperShiftTime, String swapperShiftDay,
+//                       String swapperPreferredShift, String swapperPhone, String swapShiftDate) {
+//        this.swapperImageUrl = swapperImageUrl;
+//        this.swapperTl = swapperTl;
+//        this.swapperShiftTime = swapperShiftTime;
+//        this.swapperShiftDay = swapperShiftDay;
+//        this.swapperPreferredShift = swapperPreferredShift;
+//        this.swapperPhone = swapperPhone;
+//        this.swapShiftDate = swapShiftDate;
+//    }
 
     public SwapDetails(String swapperID, String swapperShiftDay, String swapShiftDate, String swapperShiftTime, String swapperTeamLeader, String swapperPreferredShift) {
         this.swapperShiftTime = swapperShiftTime;

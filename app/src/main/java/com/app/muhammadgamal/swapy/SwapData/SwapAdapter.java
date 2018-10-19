@@ -29,11 +29,10 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
-        SwapDetails swapBody = getItem(position);
-
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.home_list_item, parent, false);
         }
+        SwapDetails swapBody = getItem(position);
         ImageView swapperImage = convertView.findViewById(R.id.swapper_image);
         TextView swapperName = convertView.findViewById(R.id.swapper_name);
         TextView swapperShiftTime = convertView.findViewById(R.id.swapper_shift_time);
@@ -60,10 +59,12 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
         final Context context = convertView.getContext();
 
         swapperName.setText(user.getmUsername());
-        swapperShiftTime.setText(swapBody.getSwapperShiftTime());
-        swapperShiftDay.setText(swapBody.getSwapperShiftDay());
-        swapperPreferredShift.setText(swapBody.getSwapperPreferredShift());
-        swapperShiftDate.setText(swapBody.getSwapShiftDate());
+        if (swapBody != null) {
+            swapperShiftTime.setText(swapBody.getSwapperShiftTime());
+            swapperShiftDay.setText(swapBody.getSwapperShiftDay());
+            swapperPreferredShift.setText(swapBody.getSwapperPreferredShift());
+            swapperShiftDate.setText(swapBody.getSwapShiftDate());
+        }
 
         homeSwapButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,6 +20,7 @@ import com.app.muhammadgamal.swapy.Activities.SwapCreationActivity;
 import com.app.muhammadgamal.swapy.R;
 import com.app.muhammadgamal.swapy.SwapData.SwapAdapter;
 import com.app.muhammadgamal.swapy.SwapData.SwapDetails;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,36 +43,26 @@ public class HomeFragment extends Fragment {
     // List view that represent teh swap data
     ListView swapList;
 
-    private ListView listView;
-
-    //Get reference to the data base
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mSwapDataBaseReference;
-
-    private ValueEventListener mValueEventListener;
-
 
     @Nullable
     @Override
-    public View onCreateView( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         getActivity().setTitle("Home");
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mSwapDataBaseReference = mFirebaseDatabase.getReference().child("swaps");
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mSwapDataBaseReference = mFirebaseDatabase.getReference().child("swaps");
-
-
-
-
-        FloatingActionButton fab = container.findViewById(R.id.fab_add_swap);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab_add_swap = rootView.findViewById(R.id.fab_add_swap);
+        fab_add_swap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SwapCreationActivity.class);
+                Intent intent = new Intent(getContext(), SwapCreationActivity.class);
                 startActivity(intent);
             }
         });
 
-        mValueEventListener = new ValueEventListener() {
+        ValueEventListener mValueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 SwapDetails swapDetails = dataSnapshot.getValue(SwapDetails.class);
@@ -82,17 +73,20 @@ public class HomeFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
             }
         };
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        mSwapDataBaseReference.addValueEventListener(mValueEventListener);
+
+        List<SwapDetails> swapBodyList = new ArrayList<>();
+        swapAdapter = new SwapAdapter(getContext(), R.layout.home_list_item,swapBodyList);
+        ListView listView = rootView.findViewById(R.id.homeList);
+        listView.setAdapter(swapAdapter);
+        return rootView;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        List<SwapDetails> swapBodyList = new ArrayList<>();
-        swapAdapter = new SwapAdapter(getContext(), R.layout.home_list_item,swapBodyList);
-        listView = getView().findViewById(R.id.list_item);
-        listView.setAdapter(swapAdapter);
+
     }
 
     @Override
