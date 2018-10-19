@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#fafafa"
     android:orientation="vertical">
 
@@ -29,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:text="Muhammad Gamal"
+                tools:text="Muhammad Gamal"
                 android:textColor="#fff"
                 android:textSize="21sp"
                 android:textStyle="bold" />
@@ -75,7 +76,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Vodafone"
+                            tools:text="Vodafone"
                             android:textColor="@color/colorPrimary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -101,7 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="HS"
+                            tools:text="HS"
                             android:textColor="@color/colorPrimary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -141,7 +142,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="10:30 PM"
+                            tools:text="10:30 PM"
                             android:textColor="@color/colorPrimary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -167,7 +168,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="8:30 PM"
+                            tools:text="8:30 PM"
                             android:textColor="@color/colorPrimary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -219,7 +220,7 @@
                 android:paddingStart="20dp"
                 android:paddingRight="0dp"
                 android:paddingEnd="0dp"
-                android:text="swapyapp@gmail.com"
+                tools:text="swapyapp@gmail.com"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -248,7 +249,7 @@
                 android:paddingStart="20dp"
                 android:paddingRight="0dp"
                 android:paddingEnd="0dp"
-                android:text="01122334455"
+                tools:text="01122334455"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -259,6 +260,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
+        android:gravity="center_horizontal"
         android:layout_weight="1">
 
         <Button
