@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.app.muhammadgamal.swapy.Activities.ProfileActivity;
@@ -47,6 +48,8 @@ public class HomeFragment extends Fragment {
     // List view that represent teh swap data
     ListView swapList;
 
+    private ProgressBar progressBar;
+
 
     @Nullable
     @Override
@@ -67,11 +70,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        progressBar = rootView.findViewById(R.id.progressBar_home);
+        progressBar.setVisibility(View.VISIBLE);
+
         ChildEventListener mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 SwapDetails swapDetails = dataSnapshot.getValue(SwapDetails.class);
                 swapAdapter.add(swapDetails);
+                progressBar.setVisibility(View.GONE);
+
             }
 
             @Override
