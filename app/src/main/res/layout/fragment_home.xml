@@ -87,6 +87,14 @@
             android:orientation="vertical"
             android:divider="@null" />
 
+        <ProgressBar
+            android:id="@+id/progressBar_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.AlertDialog.AppCompat"
+            android:layout_centerInParent="true"
+            />
+
         <!-- only visible when the list has no items. -->
         <TextView
             android:id="@+id/empty_view"
