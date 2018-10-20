@@ -40,7 +40,8 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
 
         final Context context = convertView.getContext();
 
-        SwapDetails swapBody = getItem(position);
+        final SwapDetails swapBody = getItem(position);
+        Button homeSwapButton = convertView.findViewById(R.id.btnHomeSwapList);
         ImageView swapperImage = convertView.findViewById(R.id.swapper_image);
         TextView swapperName = convertView.findViewById(R.id.swapper_name);
         TextView swapperShiftTime = convertView.findViewById(R.id.swapper_shift_time);
@@ -68,6 +69,19 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
             }
 //            userId = swapBody.getSwapperID();
         }
+
+//        if (homeSwapButton != null) {
+//            homeSwapButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int position = (Integer) view.getTag();
+//                    Intent intent = new Intent(getContext(), ProfileActivity.class);
+//                    intent.putExtra("swapper info", position);
+//                    context.startActivity(intent);
+//                }
+//            });
+
+//        }
 //        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 //        userDb.addValueEventListener(new ValueEventListener() {
 //            @Override

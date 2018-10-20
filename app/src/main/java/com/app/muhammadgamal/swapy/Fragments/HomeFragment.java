@@ -116,9 +116,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //                int position = (Integer) view.getTag();
-//                SwapDetails swapDetails = ;
+                SwapDetails swapDetails = swapBodyList.get(i);
                 Intent intent = new Intent(getContext(), ProfileActivity.class);
-                intent.putExtra("swapper info", swapBodyList.get(i));
+                intent.putExtra("swapper info", swapDetails);
                 startActivity(intent);
             }
         });

@@ -59,10 +59,13 @@ public class SwapDetails implements Parcelable {
         this.swapperAccount = swapperAccount;
     }
 
+
     protected SwapDetails(Parcel in) {
         swapperImageUrl = in.readString();
         swapperName = in.readString();
         swapperEmail = in.readString();
+        swapperCompanyBranch = in.readString();
+        swapperAccount = in.readString();
         swapperTl = in.readString();
         swapperShiftTime = in.readString();
         swapperShiftDay = in.readString();
@@ -173,25 +176,7 @@ public class SwapDetails implements Parcelable {
         this.swapperEmail = swapperEmail;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(swapperImageUrl);
-        parcel.writeString(swapperName);
-        parcel.writeString(swapperEmail);
-        parcel.writeString(swapperTl);
-        parcel.writeString(swapperShiftTime);
-        parcel.writeString(swapperShiftDay);
-        parcel.writeString(swapperPreferredShift);
-        parcel.writeString(swapperPhone);
-        parcel.writeString(swapShiftDate);
-        parcel.writeString(swapperTeamLeader);
-        parcel.writeString(swapperID);
-    }
 
     public String getSwapperCompanyBranch() {
         return swapperCompanyBranch;
@@ -207,5 +192,27 @@ public class SwapDetails implements Parcelable {
 
     public void setSwapperAccount(String swapperAccount) {
         this.swapperAccount = swapperAccount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(swapperImageUrl);
+        parcel.writeString(swapperName);
+        parcel.writeString(swapperEmail);
+        parcel.writeString(swapperCompanyBranch);
+        parcel.writeString(swapperAccount);
+        parcel.writeString(swapperTl);
+        parcel.writeString(swapperShiftTime);
+        parcel.writeString(swapperShiftDay);
+        parcel.writeString(swapperPreferredShift);
+        parcel.writeString(swapperPhone);
+        parcel.writeString(swapShiftDate);
+        parcel.writeString(swapperTeamLeader);
+        parcel.writeString(swapperID);
     }
 }

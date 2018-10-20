@@ -29,18 +29,18 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         SwapDetails swapDetails = intent.getParcelableExtra("swapper info");
-        String swapperImageUrl = swapDetails.getSwapperImageUrl();
+        String swapperID = swapDetails.getSwapperID();
         String swapperName = swapDetails.getSwapperName();
         String swapperEmail = swapDetails.getSwapperEmail();
-        String swapperShiftTime = swapDetails.getSwapperShiftDay();
-        String swapperShiftDay = swapDetails.getSwapperShiftDay();
-        String swapperPreferredShift = swapDetails.getSwapperPreferredShift();
         String swapperPhone = swapDetails.getSwapperPhone();
-        String swapShiftDate = swapDetails.getSwapShiftDate();
-        String swapperTeamLeader = swapDetails.getSwapperTeamLeader();
-        String swapperID = swapDetails.getSwapperID();
         String swapperCompanyBranch = swapDetails.getSwapperCompanyBranch();
         String swapperAccount = swapDetails.getSwapperAccount();
+        String swapperImageUrl = swapDetails.getSwapperImageUrl();
+        String swapperShiftDay = swapDetails.getSwapperShiftDay();
+        String swapShiftDate = swapDetails.getSwapShiftDate();
+        String swapperShiftTime = swapDetails.getSwapperShiftTime();
+        String swapperTeamLeader = swapDetails.getSwapperTeamLeader();
+        String swapperPreferredShift = swapDetails.getSwapperPreferredShift();
 
         profileUserImg = (CircleImageView) findViewById(R.id.profileUserImg);
         if (swapperImageUrl != null){
@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         userProfileName = (TextView) findViewById(R.id.userProfileName);
         userProfileName.setText(swapperName);
-        companyBranch = (TextView) findViewById(R.id.companyBranch);
+        companyBranch = (TextView) findViewById(R.id.profileCompanyBranch);
         companyBranch.setText(swapperCompanyBranch);
         account = (TextView) findViewById(R.id.account);
         account.setText(swapperAccount);
