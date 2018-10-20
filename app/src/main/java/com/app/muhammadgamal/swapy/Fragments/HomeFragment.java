@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,22 +36,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
     ImageView imgFilter;
-
     Dialog filterDialog;
-
     ImageView imgCloseFilterDialog;
-
     private SwapAdapter swapAdapter;
-
     // List view that represent teh swap data
     ListView swapList;
-
     private ProgressBar progressBar;
-
 
     @Nullable
     @Override
@@ -124,10 +121,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //                int position = (Integer) view.getTag();
+                String transitionName = getString(R.string.image_transition_name);
+                ImageView swapper_image = view.findViewById(R.id.swapper_image);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), swapper_image, transitionName);
                 SwapDetails swapDetails = swapBodyList.get(i);
                 Intent intent = new Intent(getContext(), ProfileActivity.class);
                 intent.putExtra("swapper info", swapDetails);
-                startActivity(intent);
+                startActivity(intent, options.toBundle());
             }
         });
         return rootView;

@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">Swapy</string>
+    <string name="image_transition_name">Show</string>
     <string name="company">Company</string>
     <string name="account">Account</string>
     <string name="current_shift">Current shift</string>
@@ -36,7 +37,7 @@
     <string name="filter">Filter</string>
     <string name="shift_time">04:00 PM</string>
     <string name="swap_time">Swap time: </string>
-    <string name="prefered_shift">Prefered Shift: </string>
+    <string name="prefered_shift">Preferred Shift: </string>
     <string name="shift_day">Shift day: </string>
     <string name="shift_date">Shift Date: </string>
     <string name="done">done</string>

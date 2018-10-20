@@ -41,7 +41,8 @@
                 android:id="@+id/swapper_image"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:src="@drawable/male_circle_512" />
+                android:src="@drawable/male_circle_512"
+                android:transitionName="@string/image_transition_name"/>
 
         </RelativeLayout>
 

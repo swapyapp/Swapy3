@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.app.muhammadgamal.swapy.Activities.ProfileActivity;
@@ -48,6 +49,7 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
         TextView swapperShiftDay = convertView.findViewById(R.id.swapper_shift_day);
         TextView swapperPreferredShift = convertView.findViewById(R.id.swapper_preferred_shift);
         TextView swapperShiftDate = convertView.findViewById(R.id.swapper_shift_date);
+        ProgressBar progressBarListItem = convertView.findViewById(R.id.progressBarListItem);
 
 
 //        String userId = "";
@@ -58,6 +60,7 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
             swapperShiftDate.setText(swapBody.getSwapShiftDate());
             swapperName.setText(swapBody.getSwapperName());
             if (swapBody.getSwapperImageUrl()!= null){
+                progressBarListItem.setVisibility(View.VISIBLE);
                 Glide.with(swapperImage.getContext())
                         .load(swapBody.getSwapperImageUrl())
                         .into(swapperImage);
@@ -67,6 +70,7 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
                 Drawable photoUrl = resources.getDrawable(R.drawable.male_circle_512);
                 swapperImage.setImageDrawable(photoUrl);
             }
+            progressBarListItem.setVisibility(View.GONE);
 //            userId = swapBody.getSwapperID();
         }
 
