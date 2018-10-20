@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.app.muhammadgamal.swapy.R;
 import com.app.muhammadgamal.swapy.SwapData.SwapDetails;
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,11 +23,15 @@ public class ProfileActivity extends AppCompatActivity {
     TextView userProfileName, companyBranch, account, currentShift, preferredShift, userEmail, userPhone, textSentOrAcceptedRequest;
     Button buttonSwapRequest;
     ProgressBar progressBar;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        mAuth = FirebaseAuth.getInstance();
+        String currentUserId = mAuth.getCurrentUser().getUid();
 
         Intent intent = getIntent();
         SwapDetails swapDetails = intent.getParcelableExtra("swapper info");
@@ -73,6 +79,11 @@ public class ProfileActivity extends AppCompatActivity {
         buttonSwapRequest = (Button) findViewById(R.id.buttonSwapRequest);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        if (swapperID.equals(currentUserId)){
+            buttonSwapRequest.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+        }
 
 
 
