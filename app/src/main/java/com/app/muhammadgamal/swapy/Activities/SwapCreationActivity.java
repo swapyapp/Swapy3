@@ -22,11 +22,15 @@ import com.app.muhammadgamal.swapy.SpinnersLestiners.SwapPreferredTimeSpinnerLes
 import com.app.muhammadgamal.swapy.SpinnersLestiners.SwapShiftDaySpinnerLestiner;
 import com.app.muhammadgamal.swapy.SpinnersLestiners.SwapShiftTimeSpinnerLestiner;
 import com.app.muhammadgamal.swapy.SwapData.SwapDetails;
+import com.app.muhammadgamal.swapy.SwapData.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SwapCreationActivity extends AppCompatActivity {
     static int SHIFT_TIME_SELECTED = 0; // 0 => AM & 1 => PM
@@ -41,7 +45,7 @@ public class SwapCreationActivity extends AppCompatActivity {
     EditText edit_text_shift_date, edit_text_team_leader_name;
     TextView creationBodyShiftTimeAMText, creationBodyShiftTimePMText, creationBodyPreferredTimeAMText, creationBodyPreferredTimePMText;
     ProgressBar creation_body_progress_bar;
-    String userId;
+    String userId, swapperImageUrl, swapperName, swapperEmail, swapperPhone, swapperCompanyBranch, swapperAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,11 +176,11 @@ public class SwapCreationActivity extends AppCompatActivity {
         } else {
             preferredAMorPM = " PM";
         }
-        String shiftDay = shifts_day_spinner.getSelectedItem().toString();
-        String shiftDate = edit_text_shift_date.getText().toString().trim();
-        String shiftTime = shifts_time_spinner.getSelectedItem().toString() + shiftAMorPM;
-        String teamLeader = edit_text_team_leader_name.getText().toString();
-        String preferredShift = preferred_time_spinner.getSelectedItem().toString() + preferredAMorPM;
+        final String shiftDay = shifts_day_spinner.getSelectedItem().toString();
+        final String shiftDate = edit_text_shift_date.getText().toString().trim();
+        final String shiftTime = shifts_time_spinner.getSelectedItem().toString() + shiftAMorPM;
+        final String teamLeader = edit_text_team_leader_name.getText().toString();
+        final String preferredShift = preferred_time_spinner.getSelectedItem().toString() + preferredAMorPM;
         if (shifts_day_spinner.getSelectedItem().toString().equals("Day")) {
             Toast.makeText(getApplicationContext(), "choose a day", Toast.LENGTH_SHORT).show();
             return;
@@ -199,21 +203,45 @@ public class SwapCreationActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "choose your preferred shift", Toast.LENGTH_SHORT).show();
             return;
         }
-        SwapDetails SwapDetails = new SwapDetails(userId, shiftDay, shiftDate, shiftTime, teamLeader, preferredShift);
-        creation_body_progress_bar.setVisibility(View.VISIBLE);
-        img_save_creation_body.setVisibility(View.GONE);
-        databaseReference.push().setValue(SwapDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        userDb.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                img_save_creation_body.setVisibility(View.VISIBLE);
-                creation_body_progress_bar.setVisibility(View.GONE);
-                if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Swap added successfully", Toast.LENGTH_SHORT).show();
-                    finish();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user.getmProfilePhotoURL() != null) {
+                    swapperImageUrl = user.getmProfilePhotoURL();
                 } else {
-                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    swapperImageUrl = null;
                 }
+                swapperName = user.getmUsername();
+                swapperPhone = user.getmPhoneNumber();
+                swapperCompanyBranch = user.getmBranch();
+                swapperAccount = user.getmAccount();
+
+                swapperEmail = mAuth.getCurrentUser().getEmail();
+                SwapDetails SwapDetails = new SwapDetails(userId, swapperName, swapperEmail, swapperPhone, swapperCompanyBranch, swapperAccount, swapperImageUrl, shiftDay, shiftDate, shiftTime, teamLeader, preferredShift);
+                creation_body_progress_bar.setVisibility(View.VISIBLE);
+                img_save_creation_body.setVisibility(View.GONE);
+                databaseReference.push().setValue(SwapDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        img_save_creation_body.setVisibility(View.VISIBLE);
+                        creation_body_progress_bar.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Swap added successfully", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+
     }
 }

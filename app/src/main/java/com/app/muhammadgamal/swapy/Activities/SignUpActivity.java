@@ -206,12 +206,13 @@ public class SignUpActivity extends AppCompatActivity  {
         }
         String username = editTextName.getText().toString();
         String phoneNumber = editTextPhone.getText().toString();
+        String email = editTextEmail.getText().toString().trim();
         String userId = mAuth.getCurrentUser().getUid();
         User user;
         DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
         if (profileImageUrl != null) {
             signUpButton.setVisibility(View.GONE);
-            user = new User(username, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift + AMorPM, profileImageUrl, 0,0,0);
+            user = new User(username, email, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift + AMorPM, profileImageUrl, 0,0,0);
             currentUserDb.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -231,7 +232,7 @@ public class SignUpActivity extends AppCompatActivity  {
             });
         } else {
             signUpButton.setVisibility(View.GONE);
-            user = new User(username, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift, null, 0,0,0);
+            user = new User(username, email, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift, null, 0,0,0);
             currentUserDb.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -368,7 +369,7 @@ public class SignUpActivity extends AppCompatActivity  {
             return;
         }
         if (COMPANY_CHOSEN == 1) {
-            Toast.makeText(this, "choose a company", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "choose a companyBranch", Toast.LENGTH_SHORT).show();
             return;
         }
         if (BRANCH_CHOSEN == 1) {

@@ -1,10 +1,11 @@
 package com.app.muhammadgamal.swapy.SwapData;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    private String mUsername, mCompany, mBranch, mAccount, mCurrentShift;
-    private String mPhoneNumber;
-    private String mProfilePhotoURL;
+public class User implements Parcelable {
+
+    private String mUsername,mEmail, mCompany, mBranch, mAccount, mCurrentShift, mProfilePhotoURL, mPhoneNumber;
     private int mSentRequests, mReceivedRequests, mAcceptedRequests;
 
     public  User(){
@@ -12,6 +13,7 @@ public class User {
     }
 
     public User(String username,
+                String email,
                 String phoneNumber,
                 String company,
                 String branch,
@@ -22,6 +24,7 @@ public class User {
                 int receivedRequests,
                 int acceptedRequests){
         mUsername = username;
+        mEmail = email;
         mPhoneNumber = phoneNumber;
         mCompany = company;
         mBranch = branch;
@@ -32,6 +35,32 @@ public class User {
         mReceivedRequests = receivedRequests;
         mAcceptedRequests = acceptedRequests;
     }
+
+    protected User(Parcel in) {
+        mUsername = in.readString();
+        mEmail = in.readString();
+        mCompany = in.readString();
+        mBranch = in.readString();
+        mAccount = in.readString();
+        mCurrentShift = in.readString();
+        mProfilePhotoURL = in.readString();
+        mPhoneNumber = in.readString();
+        mSentRequests = in.readInt();
+        mReceivedRequests = in.readInt();
+        mAcceptedRequests = in.readInt();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getmUsername() {
         return mUsername;
@@ -113,4 +142,23 @@ public class User {
         this.mAcceptedRequests = mAcceptedRequests;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mUsername);
+        parcel.writeString(mEmail);
+        parcel.writeString(mCompany);
+        parcel.writeString(mBranch);
+        parcel.writeString(mAccount);
+        parcel.writeString(mCurrentShift);
+        parcel.writeString(mProfilePhotoURL);
+        parcel.writeString(mPhoneNumber);
+        parcel.writeInt(mSentRequests);
+        parcel.writeInt(mReceivedRequests);
+        parcel.writeInt(mAcceptedRequests);
+    }
 }

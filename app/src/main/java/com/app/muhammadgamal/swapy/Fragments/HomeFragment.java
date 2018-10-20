@@ -12,10 +12,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.app.muhammadgamal.swapy.Activities.ProfileActivity;
 import com.app.muhammadgamal.swapy.Activities.SwapCreationActivity;
 import com.app.muhammadgamal.swapy.R;
 import com.app.muhammadgamal.swapy.SwapData.SwapAdapter;
@@ -49,8 +52,9 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         getActivity().setTitle("Home");
+        Button homeSwapButton = rootView.findViewById(R.id.btnHomeSwapList);
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mSwapDataBaseReference = mFirebaseDatabase.getReference().child("swaps");
 
@@ -92,10 +96,32 @@ public class HomeFragment extends Fragment {
         };
         mSwapDataBaseReference.addChildEventListener(mChildEventListener);
 
-        List<SwapDetails> swapBodyList = new ArrayList<>();
+        final List<SwapDetails> swapBodyList = new ArrayList<>();
         swapAdapter = new SwapAdapter(getContext(), R.layout.home_list_item,swapBodyList);
         ListView listView = rootView.findViewById(R.id.homeList);
         listView.setAdapter(swapAdapter);
+//        if (homeSwapButton != null) {
+//            homeSwapButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int position = (Integer) view.getTag();
+//                    Intent intent = new Intent(rootView.getContext(), ProfileActivity.class);
+//                    intent.putExtra("swapper info", swapBodyList.get(position));
+//                    startActivity(intent);
+//                }
+//            });
+//
+//        }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                int position = (Integer) view.getTag();
+//                SwapDetails swapDetails = ;
+                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                intent.putExtra("swapper info", swapBodyList.get(i));
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
