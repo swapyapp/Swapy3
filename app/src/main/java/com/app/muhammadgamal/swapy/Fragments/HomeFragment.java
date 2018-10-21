@@ -105,6 +105,7 @@ public class HomeFragment extends Fragment {
         mSwapDataBaseReference.addChildEventListener(mChildEventListener);
 
         final List<SwapDetails> swapBodyList = new ArrayList<>();
+        Collections.reverse(swapBodyList);
         swapAdapter = new SwapAdapter(getContext(), R.layout.home_list_item,swapBodyList);
         ListView listView = rootView.findViewById(R.id.homeList);
         listView.setAdapter(swapAdapter);
@@ -131,7 +132,7 @@ public class HomeFragment extends Fragment {
                 Pair<View, String> p1 = Pair.create(swapper_image, imageTransitionName);
                 Pair<View, String> p2 = Pair.create(cardView, listItemTransitionName);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), p1, p2);
-                SwapDetails swapDetails = swapBodyList.get(i);
+                SwapDetails swapDetails = swapBodyList.get(adapterView.getCount() - i - 1);
                 Intent intent = new Intent(getContext(), ProfileActivity.class);
                 intent.putExtra("swapper info", swapDetails);
                 startActivity(intent, options.toBundle());
