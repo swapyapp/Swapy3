@@ -10,7 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,9 +123,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //                int position = (Integer) view.getTag();
-                String transitionName = getString(R.string.image_transition_name);
-                ImageView swapper_image = view.findViewById(R.id.swapper_image);
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), swapper_image, transitionName);
+                String imageTransitionName = getString(R.string.image_transition_name);
+                String listItemTransitionName = getString(R.string.list_item_transition_name);
+                View swapper_image = view.findViewById(R.id.swapper_image);
+                View cardView = view.findViewById(R.id.listItemCardView);
+                Pair<View, String> p1 = Pair.create(swapper_image, imageTransitionName);
+                Pair<View, String> p2 = Pair.create(cardView, listItemTransitionName);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), p1, p2);
                 SwapDetails swapDetails = swapBodyList.get(i);
                 Intent intent = new Intent(getContext(), ProfileActivity.class);
                 intent.putExtra("swapper info", swapDetails);

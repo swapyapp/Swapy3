@@ -2,6 +2,7 @@
 
     <string name="app_name">Swapy</string>
     <string name="image_transition_name">Show</string>
+    <string name="list_item_transition_name">Show profile</string>
     <string name="company">Company</string>
     <string name="account">Account</string>
     <string name="current_shift">Current shift</string>
