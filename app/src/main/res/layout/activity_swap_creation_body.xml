@@ -107,8 +107,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:hint="@string/example_date"
-                    android:inputType="date"
-                    android:background="@drawable/edittext_style"/>
+                    android:clickable="true"
+                    android:editable="false"
+                    android:background="@drawable/edittext_style"
+                    android:textSize="@dimen/editText_text_size"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -206,7 +208,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/your_team_leader_s_name"
                 android:inputType="textCapWords"
-                android:background="@drawable/edittext_style"/>
+                android:background="@drawable/edittext_style"
+                android:textSize="@dimen/editText_text_size"/>
 
         </LinearLayout>
 

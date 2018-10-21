@@ -1,14 +1,17 @@
 package com.app.muhammadgamal.swapy.Activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -17,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.muhammadgamal.swapy.Fragments.DatePickerFragment;
 import com.app.muhammadgamal.swapy.R;
 import com.app.muhammadgamal.swapy.SpinnersLestiners.SwapPreferredTimeSpinnerLestiner;
 import com.app.muhammadgamal.swapy.SpinnersLestiners.SwapShiftDaySpinnerLestiner;
@@ -32,7 +36,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class SwapCreationActivity extends AppCompatActivity {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class SwapCreationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     static int SHIFT_TIME_SELECTED = 0; // 0 => AM & 1 => PM
     static int PREFERRED_TIME_SELECTED = 0; // 0 => AM & 1 => PM
     // instance of the FireBase and reference to the database
@@ -62,6 +70,13 @@ public class SwapCreationActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference().child("swaps");
 
         edit_text_shift_date = (EditText) findViewById(R.id.edit_text_shift_date);
+        edit_text_shift_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
         edit_text_team_leader_name = (EditText) findViewById(R.id.edit_text_team_leader_name);
 
         creation_body_progress_bar = (ProgressBar) findViewById(R.id.creation_body_progress_bar);
@@ -161,6 +176,17 @@ public class SwapCreationActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         preferred_time_spinner.setAdapter(adapter);
         preferred_time_spinner.setOnItemSelectedListener(new SwapPreferredTimeSpinnerLestiner());
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
+        String chosenDateString = dateFormat.format(c.getTime());
+        edit_text_shift_date.setText(chosenDateString);
     }
 
     //add the swap to FireBase RealTime database
