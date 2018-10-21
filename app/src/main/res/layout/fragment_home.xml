@@ -80,7 +80,7 @@
             app:backgroundTint="@color/colorPrimaryDark"/>
 
         <ListView
-            android:background="#e0e0e0"
+            android:background="#EEEEEE"
             android:id="@+id/homeList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
