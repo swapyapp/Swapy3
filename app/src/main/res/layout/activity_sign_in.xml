@@ -24,7 +24,7 @@
         android:background="@drawable/edittext_style"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:textSize="18sp" />
+        android:textSize="@dimen/editText_text_size" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -35,7 +35,7 @@
         android:background="@drawable/edittext_style"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textSize="18sp" />
+        android:textSize="@dimen/editText_text_size" />
 
 
     <RelativeLayout
@@ -52,7 +52,7 @@
             android:text="@string/btn_sign_in"
             android:textAllCaps="false"
             android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:textSize="@dimen/button_text_size" />
 
         <ProgressBar
             android:id="@+id/progressBar"

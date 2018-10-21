@@ -6,12 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="17dp"
     android:paddingRight="17dp"
+    android:background="#ffffff"
     tools:context=".Activities.SwapCreationActivity">
 
     <ImageView
         android:id="@+id/img_back_creation_body"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="25dp"
@@ -29,8 +30,8 @@
 
     <ImageView
         android:id="@+id/img_save_creation_body"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="25dp"
@@ -79,7 +80,8 @@
                 <Spinner
                     android:id="@+id/shifts_day_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp">
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_style">
 
                 </Spinner>
             </LinearLayout>
@@ -104,7 +106,9 @@
                     android:id="@+id/edit_text_shift_date"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:hint="@string/example_date" />
+                    android:hint="@string/example_date"
+                    android:inputType="date"
+                    android:background="@drawable/edittext_style"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -136,7 +140,8 @@
                     android:id="@+id/shifts_time_spinner"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_style">
 
                 </Spinner>
 
@@ -155,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/am"
                         android:textColor="#ffffff"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/button_text_size" />
 
                 </RelativeLayout>
 
@@ -173,7 +178,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/pm"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/button_text_size" />
 
                 </RelativeLayout>
 
@@ -200,7 +205,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/your_team_leader_s_name"
-                android:inputType="textCapSentences"/>
+                android:inputType="textCapWords"
+                android:background="@drawable/edittext_style"/>
 
         </LinearLayout>
 
@@ -241,7 +247,8 @@
                     android:id="@+id/preferred_time_spinner"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_style">
 
                 </Spinner>
 
@@ -260,7 +267,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/am"
                         android:textColor="#ffffff"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/button_text_size" />
 
                 </RelativeLayout>
 
@@ -278,7 +285,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/pm"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/button_text_size" />
 
                 </RelativeLayout>
 

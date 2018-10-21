@@ -368,6 +368,11 @@ public class SignUpActivity extends AppCompatActivity  {
             editTextPhone.requestFocus();
             return;
         }
+        if (phoneNumber.length() < 11) {
+            editTextPhone.setError("Please enter a valid phone number");
+            editTextPhone.requestFocus();
+            return;
+        }
         if (COMPANY_CHOSEN == 1) {
             Toast.makeText(this, "choose a companyBranch", Toast.LENGTH_SHORT).show();
             return;

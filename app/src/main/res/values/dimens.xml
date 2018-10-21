@@ -5,4 +5,8 @@
 
     <!-- Common margin value used throughout the app -->
     <dimen name="activity_margin">16dp</dimen>
+
+    <dimen name="editText_text_size">16sp</dimen>
+
+    <dimen name="button_text_size">14sp</dimen>
 </resources>

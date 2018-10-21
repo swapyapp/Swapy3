@@ -45,7 +45,7 @@
             android:background="@drawable/edittext_style"
             android:hint="@string/name"
             android:inputType="textPersonName"
-            android:textSize="16sp" />
+            android:textSize="@dimen/editText_text_size" />
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -56,7 +56,7 @@
             android:background="@drawable/edittext_style"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:textSize="16sp" />
+            android:textSize="@dimen/editText_text_size" />
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -67,7 +67,7 @@
             android:background="@drawable/edittext_style"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textSize="16sp" />
+            android:textSize="@dimen/editText_text_size" />
 
         <EditText
             android:id="@+id/editTextConfirmPassword"
@@ -78,7 +78,7 @@
             android:background="@drawable/edittext_style"
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
-            android:textSize="16sp" />
+            android:textSize="@dimen/editText_text_size" />
 
         <EditText
             android:id="@+id/editTextPhone"
@@ -89,21 +89,23 @@
             android:background="@drawable/edittext_style"
             android:hint="@string/phone"
             android:inputType="phone"
-            android:textSize="16sp" />
+            android:textSize="@dimen/editText_text_size" />
 
         <Spinner
             android:id="@+id/spinnerCompany"
             android:layout_width="265dp"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/spinner_style" />
 
         <Spinner
             android:id="@+id/spinnerCompanyBranch"
             android:layout_width="265dp"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/spinner_style" />
 
 
         <Spinner
@@ -111,7 +113,8 @@
             android:layout_width="265dp"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/spinner_style" />
 
         <LinearLayout
             android:layout_width="265dp"
@@ -123,7 +126,8 @@
                 android:id="@+id/currentShiftSpinner"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.6">
+                android:layout_weight="1.6"
+                android:background="@drawable/spinner_style">
 
             </Spinner>
 
@@ -153,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/am"
                             android:textColor="#ffffff"
-                            android:textSize="14sp" />
+                            android:textSize="@dimen/button_text_size" />
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -177,7 +181,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/pm"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="14sp" />
+                            android:textSize="@dimen/button_text_size" />
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -200,7 +204,7 @@
                 android:text="@string/btn_sign_up"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="@dimen/button_text_size" />
 
             <ProgressBar
                 android:id="@+id/progressBar"

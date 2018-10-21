@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimary"
     android:orientation="horizontal"
     android:paddingEnd="0dp"
@@ -32,7 +33,7 @@
                 android:id="@+id/navUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Muhammad Gamal"
+                tools:text="Muhammad Gamal"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -42,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Vodafone"
+                tools:text="Vodafone"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -50,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Current Shift: 10:30 AM"
+                tools:text="Current Shift: 10:30 AM"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
