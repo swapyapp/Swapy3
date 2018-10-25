@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -25,8 +25,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_filter_icon"
-                    android:contentDescription="@string/filter"/>
+                    android:contentDescription="@string/filter"
+                    android:src="@drawable/ic_filter_icon" />
 
             </RelativeLayout>
 
@@ -63,6 +63,8 @@
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -73,41 +75,63 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginStart="0dp"
+            android:clickable="true"
             android:src="@drawable/ic_add_white_24dp"
-            app:backgroundTint="@color/colorPrimaryDark"/>
+            app:backgroundTint="@color/colorPrimary" />
 
-        <ListView
-            android:background="#EEEEEE"
-            android:id="@+id/homeList"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/homeSwipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:divider="@null"
-            android:drawSelectorOnTop="true"
-            />
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/homeList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EEEEEE"
+                android:divider="@null"
+                android:drawSelectorOnTop="true"
+                android:orientation="vertical" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <ProgressBar
             android:id="@+id/progressBar_home"
+            style="@style/Base.AlertDialog.AppCompat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Base.AlertDialog.AppCompat"
-            android:layout_centerInParent="true"
-            />
+            android:layout_centerInParent="true" />
 
         <!-- only visible when the list has no items. -->
-        <TextView
-            android:id="@+id/empty_view"
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textAppearance="?android:textAppearanceMedium" />
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/empty_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/raleway_semi_bold"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/empty_view2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/empty_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/raleway_semi_bold"
+                android:text="@string/swipe_down_to_refresh"
+                android:textAppearance="?android:textAppearanceSmall" />
+        </RelativeLayout>
 
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

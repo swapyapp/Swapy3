@@ -184,7 +184,7 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String chosenDateString = dateFormat.format(c.getTime());
         edit_text_shift_date.setText(chosenDateString);
     }

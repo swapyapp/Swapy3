@@ -52,6 +52,9 @@
     <string name="time">Time</string>
     <string name="team_leader">Team leader</string>
     <string name="your_team_leader_s_name">Your team leader\'s name</string>
+    <string name="no_internet_connection">Check your internet connection.</string>
+    <string name="no_swaps_found">No swaps found.</string>
+    <string name="swipe_down_to_refresh">Swipe down to refresh.</string>
 
     <string-array name="company">
         <item>Choose company</item>
