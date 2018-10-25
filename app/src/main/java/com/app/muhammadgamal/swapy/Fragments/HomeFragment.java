@@ -4,70 +4,71 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.app.muhammadgamal.swapy.Activities.ProfileActivity;
 import com.app.muhammadgamal.swapy.Activities.SwapCreationActivity;
 import com.app.muhammadgamal.swapy.Common;
 import com.app.muhammadgamal.swapy.R;
+import com.app.muhammadgamal.swapy.SpinnersLestiners.PreferredShiftSpinnerListener;
 import com.app.muhammadgamal.swapy.SwapData.SwapAdapter;
 import com.app.muhammadgamal.swapy.SwapData.SwapDetails;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-
-import static com.app.muhammadgamal.swapy.Common.isNetworkAvailable;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    static int PREFERRED_TIME_SELECTED = 0; // 0 => AM & 1 => PM
     ImageView imgFilter;
     Dialog filterDialog;
     ImageView imgCloseFilterDialog;
     // List view that represent teh swap data
     ListView swapList;
-    TextView empty_view, empty_view2;
+    TextView empty_view, empty_view2, filterPreferredTimePMText, filterPreferredTimeAMText, selectedPreferredTime;
     SwipeRefreshLayout homeSwipeRefresh;
     FloatingActionButton fab_add_swap;
     NetworkInfo networkInfo;
     ConnectivityManager cm;
     DatabaseReference mSwapDataBaseReference;
     FirebaseDatabase mFirebaseDatabase;
-    Button homeSwapButton;
+    Button homeSwapButton, buttonApplyFilter;
     View rootView;
     ListView listView;
+    Spinner homeFilterSpinner;
+    String preferredShift, preferredAMorPM;
+    RelativeLayout filterPreferredTimeAM, filterPreferredTimePM;
     private SwapAdapter swapAdapter;
     private ProgressBar progressBar;
 
@@ -94,6 +95,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         progressBar = rootView.findViewById(R.id.progressBar_home);
         empty_view = rootView.findViewById(R.id.empty_view);
         empty_view2 = rootView.findViewById(R.id.empty_view2);
+        selectedPreferredTime = rootView.findViewById(R.id.selectedPreferredTime);
         progressBar.setVisibility(View.VISIBLE);
         empty_view2.setVisibility(View.GONE);
         fab_add_swap.setVisibility(View.GONE);
@@ -128,18 +130,34 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     SwapDetails swapDetails = dataSnapshot.getValue(SwapDetails.class);
-                    //check if there is no swaps
-                    if (swapDetails.getSwapperID() == null) {
-                        empty_view.setText(R.string.no_swaps_found);
-                        empty_view2.setVisibility(View.VISIBLE);
-                    } else {
+
+                    if (preferredAMorPM == null) {
                         swapAdapter.add(swapDetails);
+                        selectedPreferredTime.setText(R.string.any_time);
+                    } else if (preferredAMorPM.equals(" AM")) {
+                        if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
+                            swapAdapter.add(swapDetails);
+                            selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                        }
+                    } else if (preferredAMorPM.equals(" PM")) {
+                        if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
+                            swapAdapter.add(swapDetails);
+                            selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                        }
                     }
+
 
                     progressBar.setVisibility(View.GONE);
                     fab_add_swap.setVisibility(View.VISIBLE);
                     empty_view.setVisibility(View.GONE);
                     empty_view2.setVisibility(View.GONE);
+
+                    if (swapAdapter.isEmpty()) {
+                        empty_view.setVisibility(View.VISIBLE);
+                        empty_view.setText(R.string.no_swaps_found);
+                        empty_view2.setVisibility(View.VISIBLE);
+                        selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                    }
 
                 }
 
@@ -240,8 +258,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public void showFilterDialog() {
 
+        Resources res = getResources();
+        final Drawable notSelectedBackground = res.getDrawable(R.drawable.selection_background_light);
+        final Drawable SelectedBackground = res.getDrawable(R.drawable.selection_background);
+
         filterDialog.setContentView(R.layout.dialog_filter);
         filterDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         imgCloseFilterDialog = filterDialog.findViewById(R.id.imgCloseFilterDialog);
         imgCloseFilterDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,7 +272,72 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 filterDialog.dismiss();
             }
         });
+
+        //time spinner
+        homeFilterSpinner = filterDialog.findViewById(R.id.preferredTimeSpinner);
+        preferredShiftHomeSpinner();
+
+        filterPreferredTimeAMText = filterDialog.findViewById(R.id.filterPreferredTimeAMText);
+        filterPreferredTimePMText = filterDialog.findViewById(R.id.filterPreferredTimePMText);
+
+        filterPreferredTimeAM = filterDialog.findViewById(R.id.filterPreferredTimeAM);
+        filterPreferredTimeAM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PREFERRED_TIME_SELECTED = 0;
+                filterPreferredTimeAM.setBackground(SelectedBackground);
+                filterPreferredTimePM.setBackground(notSelectedBackground);
+                filterPreferredTimeAMText.setTextColor(getResources().getColor(R.color.white));
+                filterPreferredTimePMText.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        });
+        filterPreferredTimePM = filterDialog.findViewById(R.id.filterPreferredTimePM);
+        filterPreferredTimePM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PREFERRED_TIME_SELECTED = 1;
+                filterPreferredTimePM.setBackground(SelectedBackground);
+                filterPreferredTimeAM.setBackground(notSelectedBackground);
+                filterPreferredTimePMText.setTextColor(getResources().getColor(R.color.white));
+                filterPreferredTimeAMText.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        });
+
+
+        buttonApplyFilter = filterDialog.findViewById(R.id.buttonApplyFilter);
+        buttonApplyFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                applyFilter();
+            }
+        });
+
         filterDialog.show();
+    }
+
+    private void applyFilter() {
+
+        if (PREFERRED_TIME_SELECTED == 0) {
+            preferredAMorPM = " AM";
+        }
+        if (PREFERRED_TIME_SELECTED == 1) {
+            preferredAMorPM = " PM";
+        }
+        if (homeFilterSpinner.getSelectedItem().toString().equals("any time")) {
+            preferredAMorPM = null;
+        } else {
+            preferredShift = homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM;
+        }
+        fetchData();
+        filterDialog.dismiss();
+
+    }
+
+    private void preferredShiftHomeSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(), R.array.Home_Preferred_Shift, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        homeFilterSpinner.setAdapter(adapter);
+        homeFilterSpinner.setOnItemSelectedListener(new PreferredShiftSpinnerListener());
     }
 
     @Override

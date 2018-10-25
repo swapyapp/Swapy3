@@ -99,7 +99,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         buttonSwapRequest = (Button) findViewById(R.id.buttonSwapRequest);
         buttonSwapRequest.bringToFront();
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar_profile);
+
+        //if the user opens his swap the swap request button view will be gone
+        if (swapperID.equals(currentUserId)){
+            buttonSwapRequest.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+        }
 
         tryButton = findViewById(R.id.button2);
         tryButton.setOnClickListener(new View.OnClickListener() {
@@ -120,10 +126,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        if (swapperID.equals(currentUserId)){
-            buttonSwapRequest.setVisibility(View.GONE);
-            progressBar.setVisibility(View.GONE);
-        }
+
 
         buttonSwapRequest.setOnClickListener(new View.OnClickListener() {
             @Override
