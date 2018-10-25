@@ -56,6 +56,10 @@
     <string name="no_swaps_found">No swaps found.</string>
     <string name="swipe_down_to_refresh">Swipe down to refresh.</string>
 
+    <!-- Notification Message -->
+    <string name="notification_message">wants to swap his shift with your</string>
+
+
     <string-array name="company">
         <item>Choose company</item>
         <item>Vodafone</item>
