@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +35,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -53,7 +51,8 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
     EditText edit_text_shift_date, edit_text_team_leader_name;
     TextView creationBodyShiftTimeAMText, creationBodyShiftTimePMText, creationBodyPreferredTimeAMText, creationBodyPreferredTimePMText;
     ProgressBar creation_body_progress_bar;
-    String userId, swapperImageUrl, swapperName, swapperEmail, swapperPhone, swapperCompanyBranch, swapperAccount;
+    String userId, swapperImageUrl, swapperName, swapperEmail, swapperPhone;
+    public static String currentUserCompanyBranch, currentUserAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,11 +240,11 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
                 }
                 swapperName = user.getmUsername();
                 swapperPhone = user.getmPhoneNumber();
-                swapperCompanyBranch = user.getmBranch();
-                swapperAccount = user.getmAccount();
+                currentUserCompanyBranch = user.getmBranch();
+                currentUserAccount = user.getmAccount();
 
                 swapperEmail = mAuth.getCurrentUser().getEmail();
-                SwapDetails SwapDetails = new SwapDetails(userId, swapperName, swapperEmail, swapperPhone, swapperCompanyBranch, swapperAccount, swapperImageUrl, shiftDay, shiftDate, shiftTime, teamLeader, preferredShift);
+                SwapDetails SwapDetails = new SwapDetails(userId, swapperName, swapperEmail, swapperPhone, currentUserCompanyBranch, currentUserAccount, swapperImageUrl, shiftDay, shiftDate, shiftTime, teamLeader, preferredShift);
                 creation_body_progress_bar.setVisibility(View.VISIBLE);
                 img_save_creation_body.setVisibility(View.GONE);
                 databaseReference.push().setValue(SwapDetails).addOnCompleteListener(new OnCompleteListener<Void>() {

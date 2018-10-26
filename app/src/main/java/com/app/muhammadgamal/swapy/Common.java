@@ -4,7 +4,13 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Common {
+
+    public static FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    public static String currentUserId = currentUser.getUid();
 
     public static boolean isNetworkAvailable(Context ctx) {
         NetworkInfo info = getActiveNetworkInfo(ctx);

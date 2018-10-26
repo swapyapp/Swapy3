@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -30,7 +31,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.app.muhammadgamal.swapy.Activities.NavDrawerActivity;
 import com.app.muhammadgamal.swapy.Activities.ProfileActivity;
 import com.app.muhammadgamal.swapy.Activities.SwapCreationActivity;
 import com.app.muhammadgamal.swapy.Common;
@@ -38,11 +41,16 @@ import com.app.muhammadgamal.swapy.R;
 import com.app.muhammadgamal.swapy.SpinnersLestiners.PreferredShiftSpinnerListener;
 import com.app.muhammadgamal.swapy.SwapData.SwapAdapter;
 import com.app.muhammadgamal.swapy.SwapData.SwapDetails;
+import com.app.muhammadgamal.swapy.SwapData.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,10 +75,11 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     View rootView;
     ListView listView;
     Spinner homeFilterSpinner;
-    String preferredShift, preferredAMorPM = null;
+    String userId, preferredShift, preferredAMorPM = null, currentUserAccount, currentUserCompanyBranch;
     RelativeLayout filterPreferredTimeAM, filterPreferredTimePM;
     private SwapAdapter swapAdapter;
     private ProgressBar progressBar;
+    FirebaseAuth mAuth;
 
 
     @SuppressLint("RestrictedApi")
@@ -81,6 +90,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         getActivity().setTitle("Home");
 
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser().getUid();
 
         homeSwapButton = rootView.findViewById(R.id.btnHomeSwapList);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -100,8 +111,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         empty_view2.setVisibility(View.GONE);
         fab_add_swap.setVisibility(View.GONE);
 
-        fetchData();
-
         //handle the SwipeRefreshLayout
         homeSwipeRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.homeSwipeRefresh);
         homeSwipeRefresh.setOnRefreshListener(this);
@@ -117,45 +126,71 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 startActivity(intent);
             }
         });
+        fetchData();
         return rootView;
     }
 
     //show swaps in home fragment
     @SuppressLint("RestrictedApi")
     private void fetchData() {
+
         // If there is a network connection, fetch data
         if (Common.isNetworkAvailable(getContext()) || Common.isWifiAvailable(getContext())) {
+            DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+//            userDb.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    User user = dataSnapshot.getValue(User.class);
+//                    currentUserAccount = user.getmAccount();
+//                    currentUserCompanyBranch = user.getmBranch();
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+
             ChildEventListener mChildEventListener = new ChildEventListener() {
                 @SuppressLint("RestrictedApi")
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     SwapDetails swapDetails = dataSnapshot.getValue(SwapDetails.class);
-
-                    if (preferredAMorPM == null) {
-                        swapAdapter.add(swapDetails);
-                        selectedPreferredTime.setText(R.string.any_time);
-                    } else if (preferredAMorPM.equals(" AM")) {
-                        if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
-                            swapAdapter.add(swapDetails);
-                            selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
-                        }
-                    } else if (preferredAMorPM.equals(" PM")) {
-                        if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
-                            swapAdapter.add(swapDetails);
-                            selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
-                        }
-                    }
+//                    if (swapDetails.getSwapperAccount() != null && swapDetails.getSwapperCompanyBranch() != null) {
+//                        if (swapDetails.getSwapperAccount().equals(NavDrawerActivity.currentUserAccount) && swapDetails.getSwapperCompanyBranch().equals(NavDrawerActivity.currentUserBranch)) {
+                            if (preferredAMorPM == null) {
+//                                if (swapDetails.getSwapperAccount().equals(currentUserAccount) && swapDetails.getSwapperCompanyBranch().equals(currentUserCompanyBranch)) {
+                                    swapAdapter.add(swapDetails);
+                                    selectedPreferredTime.setText(R.string.any_time);
+//                                }
+                            } else if (preferredAMorPM.equals(" AM")) {
+                                if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
+                                    swapAdapter.add(swapDetails);
+                                    selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                                }
+                            } else if (preferredAMorPM.equals(" PM")) {
+                                if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
+                                    swapAdapter.add(swapDetails);
+                                    selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                                }
+                            }
+//                        }
+//                    }
 
 
                     progressBar.setVisibility(View.GONE);
                     fab_add_swap.setVisibility(View.VISIBLE);
                     empty_view.setVisibility(View.GONE);
                     empty_view2.setVisibility(View.GONE);
-
                     if (swapAdapter.isEmpty()) {
                         empty_view.setVisibility(View.VISIBLE);
                         empty_view.setText(R.string.no_swaps_found);
                         empty_view2.setVisibility(View.VISIBLE);
+                        String time = "any time";
+//                        if (homeFilterSpinner.getSelectedItem().toString() != null) {
+//                            time = homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM;
+//                        }
                         selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
                     }
 

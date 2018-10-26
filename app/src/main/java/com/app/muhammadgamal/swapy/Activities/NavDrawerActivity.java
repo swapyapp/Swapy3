@@ -39,6 +39,7 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
     private TextView receivedSwapRequests, sentSwapRequests, acceptedSwapRequests, navUsername, navUserCompany, navUserCurrentShift;
     private FirebaseAuth mAuth;
     private CircleImageView userNavImage;
+    public static String currentUserBranch, currentUserAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +109,9 @@ public class NavDrawerActivity extends AppCompatActivity implements NavigationVi
                     Glide.with(NavDrawerActivity.this).load(user.getmProfilePhotoURL()).into(userNavImage);
                 }
                 navUsername.setText(user.getmUsername());
-                navUserCompany.setText(user.getmBranch() + ", " + user.getmAccount());
+                currentUserBranch = user.getmBranch();
+                currentUserAccount = user.getmAccount();
+                navUserCompany.setText(currentUserBranch + ", " + currentUserAccount);
                 navUserCurrentShift.setText("Current Shift: " + user.getmCurrentShift());
                 receivedSwapRequests.setText(String.valueOf(user.getmReceivedRequests()));
                 sentSwapRequests.setText(String.valueOf(user.getmSentRequests()));
