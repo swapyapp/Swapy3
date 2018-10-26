@@ -50,6 +50,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    String zatona;
     static int PREFERRED_TIME_SELECTED = 0; // 0 => AM & 1 => PM
     ImageView imgFilter;
     Dialog filterDialog;
