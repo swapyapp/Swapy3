@@ -158,13 +158,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     SwapDetails swapDetails = dataSnapshot.getValue(SwapDetails.class);
-                    if (swapDetails.getSwapperAccount() != null && swapDetails.getSwapperCompanyBranch() != null) {
-                        if (swapDetails.getSwapperAccount().equals(NavDrawerActivity.currentUserAccount) && swapDetails.getSwapperCompanyBranch().equals(NavDrawerActivity.currentUserBranch)) {
+//                    if (swapDetails.getSwapperAccount() != null && swapDetails.getSwapperCompanyBranch() != null) {
+//                        if (swapDetails.getSwapperAccount().equals(NavDrawerActivity.currentUserAccount) && swapDetails.getSwapperCompanyBranch().equals(NavDrawerActivity.currentUserBranch)) {
                             if (preferredAMorPM == null) {
-                                if (swapDetails.getSwapperAccount().equals(currentUserAccount) && swapDetails.getSwapperCompanyBranch().equals(currentUserCompanyBranch)) {
+//                                if (swapDetails.getSwapperAccount().equals(currentUserAccount) && swapDetails.getSwapperCompanyBranch().equals(currentUserCompanyBranch)) {
                                     swapAdapter.add(swapDetails);
                                     selectedPreferredTime.setText(R.string.any_time);
-                                }
+//                                }
                             } else if (preferredAMorPM.equals(" AM")) {
                                 if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
                                     swapAdapter.add(swapDetails);
@@ -176,8 +176,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                     selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
                                 }
                             }
-                       }
-                    }
+//                        }
+//                    }
 
 
                     progressBar.setVisibility(View.GONE);

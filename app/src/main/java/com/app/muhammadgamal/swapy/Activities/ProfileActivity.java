@@ -103,15 +103,12 @@ public class ProfileActivity extends AppCompatActivity {
         buttonSwapRequest = (Button) findViewById(R.id.buttonSwapRequest);
         buttonSwapRequest.bringToFront();
         progressBar = (ProgressBar) findViewById(R.id.progressBar_profile);
-<<<<<<< HEAD
-=======
 
         //if the user opens his swap the swap request button view will be gone
         if (swapperID.equals(currentUserId)){
             buttonSwapRequest.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
         }
->>>>>>> ab0294009fb9923d832e648bb606ea6c4505021c
 
         tryButton = findViewById(R.id.button2);
         tryButton.setOnClickListener(new View.OnClickListener() {
