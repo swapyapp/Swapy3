@@ -6,17 +6,18 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.muhammadgamal.swapy.Notifications.SendActivity;
 import com.app.muhammadgamal.swapy.R;
 import com.app.muhammadgamal.swapy.SwapData.SwapDetails;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,6 +29,8 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    private final static String LOG_TAG = ProfileActivity.class.getSimpleName();
 
     CircleImageView profileUserImg;
     TextView userProfileName, companyBranch, account, currentShift, preferredShift, userEmail, userPhone, textSentOrAcceptedRequest;
@@ -99,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         buttonSwapRequest = (Button) findViewById(R.id.buttonSwapRequest);
         buttonSwapRequest.bringToFront();
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar_profile);
 
         tryButton = findViewById(R.id.button2);
         tryButton.setOnClickListener(new View.OnClickListener() {
@@ -110,13 +113,22 @@ public class ProfileActivity extends AppCompatActivity {
                 Map <String, Object> notificationMessage = new HashMap<>();
                 notificationMessage.put("message", requestMessage);
                 notificationMessage.put("from", currentUserId);
-                mFireStore.collection("Users/" + swapperID + "notification").add(notificationMessage).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+
+                mFireStore.collection("Users/" + swapperID + "/Notification").add(notificationMessage).
+                        addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         Toast.makeText(ProfileActivity.this,"Notification sent", Toast.LENGTH_LONG );
                         progressBar.setVisibility(View.INVISIBLE);
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ProfileActivity.this,"somthing went wrong", Toast.LENGTH_LONG );
+                        Log.e(LOG_TAG, "Failed to insert row for " + currentUserId);
+                    }
                 });
+
             }
         });
 
@@ -124,6 +136,7 @@ public class ProfileActivity extends AppCompatActivity {
             buttonSwapRequest.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
         }
+
 
         buttonSwapRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
                 });
             }
         });
+
 
     }
 }
