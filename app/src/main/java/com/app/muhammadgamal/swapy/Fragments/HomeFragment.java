@@ -81,6 +81,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private SwapAdapter swapAdapter;
     private ProgressBar progressBar;
     FirebaseAuth mAuth;
+    private User user;
 
 
     @SuppressLint("RestrictedApi")
@@ -138,77 +139,78 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         // If there is a network connection, fetch data
         if (Common.isNetworkAvailable(getContext()) || Common.isWifiAvailable(getContext())) {
             DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-//            userDb.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    User user = dataSnapshot.getValue(User.class);
-//                    currentUserAccount = user.getmAccount();
-//                    currentUserCompanyBranch = user.getmBranch();
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-
-            ChildEventListener mChildEventListener = new ChildEventListener() {
-                @SuppressLint("RestrictedApi")
+            userDb.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    SwapDetails swapDetails = dataSnapshot.getValue(SwapDetails.class);
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    user = dataSnapshot.getValue(User.class);
+                    currentUserAccount = user.getmAccount();
+                    currentUserCompanyBranch = user.getmBranch();
+
+                    ChildEventListener mChildEventListener = new ChildEventListener() {
+                        @SuppressLint("RestrictedApi")
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            SwapDetails swapDetails = dataSnapshot.getValue(SwapDetails.class);
 //                    if (swapDetails.getSwapperAccount() != null && swapDetails.getSwapperCompanyBranch() != null) {
-//                        if (swapDetails.getSwapperAccount().equals(NavDrawerActivity.currentUserAccount) && swapDetails.getSwapperCompanyBranch().equals(NavDrawerActivity.currentUserBranch)) {
-                            if (preferredAMorPM == null) {
+                            if (swapDetails.getSwapperAccount().equals(currentUserAccount) && swapDetails.getSwapperCompanyBranch().equals(currentUserCompanyBranch)) {
+                                if (preferredAMorPM == null) {
 //                                if (swapDetails.getSwapperAccount().equals(currentUserAccount) && swapDetails.getSwapperCompanyBranch().equals(currentUserCompanyBranch)) {
                                     swapAdapter.add(swapDetails);
                                     selectedPreferredTime.setText(R.string.any_time);
 //                                }
-                            } else if (preferredAMorPM.equals(" AM")) {
-                                if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
-                                    swapAdapter.add(swapDetails);
-                                    selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
-                                }
-                            } else if (preferredAMorPM.equals(" PM")) {
-                                if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
-                                    swapAdapter.add(swapDetails);
-                                    selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                                } else if (preferredAMorPM.equals(" AM")) {
+                                    if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
+                                        swapAdapter.add(swapDetails);
+                                        selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                                    }
+                                } else if (preferredAMorPM.equals(" PM")) {
+                                    if (swapDetails.getSwapperShiftTime().equals(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM)) {
+                                        swapAdapter.add(swapDetails);
+                                        selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                                    }
                                 }
                             }
-//                        }
 //                    }
 
 
-                    progressBar.setVisibility(View.GONE);
-                    fab_add_swap.setVisibility(View.VISIBLE);
-                    empty_view.setVisibility(View.GONE);
-                    empty_view2.setVisibility(View.GONE);
-                    if (swapAdapter.isEmpty()) {
-                        empty_view.setVisibility(View.VISIBLE);
-                        empty_view.setText(R.string.no_swaps_found);
-                        empty_view2.setVisibility(View.VISIBLE);
-                        String time = "any time";
+                            progressBar.setVisibility(View.GONE);
+                            fab_add_swap.setVisibility(View.VISIBLE);
+                            empty_view.setVisibility(View.GONE);
+                            empty_view2.setVisibility(View.GONE);
+                            if (swapAdapter.isEmpty()) {
+                                empty_view.setVisibility(View.VISIBLE);
+                                empty_view.setText(R.string.no_swaps_found);
+                                empty_view2.setVisibility(View.VISIBLE);
+                                String time = "any time";
 //                        if (homeFilterSpinner.getSelectedItem().toString() != null) {
 //                            time = homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM;
 //                        }
-                        selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
-                    }
+                                selectedPreferredTime.setText(time);
+                            }
 
-                }
+                        }
 
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                }
+                        }
 
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                }
+                        }
 
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    };
+                    mSwapDataBaseReference.addChildEventListener(mChildEventListener);
 
                 }
 
@@ -216,8 +218,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
-            };
-            mSwapDataBaseReference.addChildEventListener(mChildEventListener);
+            });
 
             final List<SwapDetails> swapBodyList = new ArrayList<>();
             Collections.reverse(swapBodyList);
