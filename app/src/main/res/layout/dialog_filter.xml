@@ -62,14 +62,15 @@
                     android:id="@+id/preferredTimeSpinner"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1.4"
+                    android:background="@drawable/spinner_style">
 
                 </Spinner>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -78,19 +79,20 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:paddingEnd="0dp"
+                        android:paddingEnd="5dp"
                         android:paddingLeft="10dp"
-                        android:paddingRight="0dp"
+                        android:paddingRight="5dp"
                         android:paddingStart="10dp">
 
                         <RelativeLayout
-                            android:id="@+id/preferredTimeAM"
+                            android:id="@+id/filterPreferredTimeAM"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:background="@drawable/selection_background"
                             android:gravity="center">
 
                             <TextView
+                                android:id="@+id/filterPreferredTimeAMText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/am"
@@ -106,18 +108,19 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:paddingEnd="10dp"
-                        android:paddingLeft="0dp"
+                        android:paddingLeft="5dp"
                         android:paddingRight="10dp"
-                        android:paddingStart="0dp">
+                        android:paddingStart="5dp">
 
                         <RelativeLayout
-                            android:id="@+id/preferredTimePM"
+                            android:id="@+id/filterPreferredTimePM"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:background="@drawable/selection_background_light"
                             android:gravity="center">
 
                             <TextView
+                                android:id="@+id/filterPreferredTimePMText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/pm"

@@ -7,6 +7,7 @@
     <string name="account">Account</string>
     <string name="current_shift">Current shift</string>
     <string name="preferred_shift">Preferred shift: </string>
+    <string name="preferred_shift_2">Preferred shift</string>
     <string name="text_display_contact_info">Contact information will be displayed after the swap request has been accepted</string>
     <string name="btn_send_request">Send a Swap Request</string>
     <string name="request_sent">You have sent a swap request</string>
@@ -52,9 +53,13 @@
     <string name="time">Time</string>
     <string name="team_leader">Team leader</string>
     <string name="your_team_leader_s_name">Your team leader\'s name</string>
+    <string name="no_internet_connection">Check your internet connection.</string>
+    <string name="no_swaps_found">No swaps found.</string>
+    <string name="swipe_down_to_refresh">Swipe down to refresh.</string>
 
     <!-- Notification Message -->
     <string name="notification_message">wants to swap his shift with your</string>
+    <string name="any_time">any time</string>
 
 
     <string-array name="company">
@@ -128,5 +133,20 @@
         <item>10:30</item>
         <item>11:00</item>
         <item>11:30</item>
+    </string-array>
+    <string-array name="Home_Preferred_Shift">
+        <item>any time</item>
+        <item>12:00</item>
+        <item>01:00</item>
+        <item>02:00</item>
+        <item>03:00</item>
+        <item>04:00</item>
+        <item>05:00</item>
+        <item>06:00</item>
+        <item>07:00</item>
+        <item>08:00</item>
+        <item>09:00</item>
+        <item>10:00</item>
+        <item>11:00</item>
     </string-array>
 </resources>
