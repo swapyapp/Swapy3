@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     View rootView;
     ListView listView;
     Spinner homeFilterSpinner;
-    String preferredShift, preferredAMorPM;
+    String preferredShift, preferredAMorPM = null;
     RelativeLayout filterPreferredTimeAM, filterPreferredTimePM;
     private SwapAdapter swapAdapter;
     private ProgressBar progressBar;
@@ -309,6 +309,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onClick(View view) {
                 applyFilter();
+                PREFERRED_TIME_SELECTED = 0;
             }
         });
 
