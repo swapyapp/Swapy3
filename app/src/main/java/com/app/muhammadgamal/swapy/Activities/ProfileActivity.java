@@ -38,8 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
     ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private String requestMessage;
-    Button tryButton;
-
+    private TextView swapDone;
     //The FireBase store that will contain the map of the notifications for each user with his ID
     private FirebaseFirestore mFireStore;
 
@@ -56,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         SwapDetails swapDetails = intent.getParcelableExtra("swapper info");
         final String swapperID = swapDetails.getSwapperID();
-        String swapperName = swapDetails.getSwapperName();
+        final String swapperName = swapDetails.getSwapperName();
         String swapperEmail = swapDetails.getSwapperEmail();
         String swapperPhone = swapDetails.getSwapperPhone();
         String swapperCompanyBranch = swapDetails.getSwapperCompanyBranch();
@@ -111,12 +110,12 @@ public class ProfileActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
 
+        swapDone = findViewById(R.id.textSentOrAcceptedRequest);
 
-
-        tryButton = findViewById(R.id.button2);
-        tryButton.setOnClickListener(new View.OnClickListener() {
+        buttonSwapRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonSwapRequest.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
 
                 Map <String, Object> notificationMessage = new HashMap<>();
@@ -125,43 +124,20 @@ public class ProfileActivity extends AppCompatActivity {
 
                 mFireStore.collection("Users/" + swapperID + "/Notification").add(notificationMessage).
                         addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        Toast.makeText(ProfileActivity.this,"Notification sent", Toast.LENGTH_LONG ).show();
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                Toast.makeText(ProfileActivity.this,"Notification sent", Toast.LENGTH_LONG ).show();
+                                progressBar.setVisibility(View.INVISIBLE);
+                                swapDone.setVisibility(View.VISIBLE);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(ProfileActivity.this,"somthing went wrong", Toast.LENGTH_LONG ).show();
                         Log.e(LOG_TAG, "Failed to insert row for " + currentUserId);
                     }
                 });
-
             }
         });
-
-
-
-
-        buttonSwapRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-
-                Map <String, Object> notificationMessage = new HashMap<>();
-                notificationMessage.put("message", requestMessage);
-                notificationMessage.put("from", currentUserId);
-                mFireStore.collection("Users/" + swapperID + "notification").add(notificationMessage).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        Toast.makeText(ProfileActivity.this,"Notification sent", Toast.LENGTH_LONG ).show();
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-                });
-            }
-        });
-
-
     }
 }

@@ -254,19 +254,12 @@
                 tools:text="01122334455"
                 android:textSize="14sp"
                 android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
         </LinearLayout>
 
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
@@ -297,9 +290,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/request_sent"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:visibility="gone" />
     </RelativeLayout>
-
-
 </LinearLayout>
