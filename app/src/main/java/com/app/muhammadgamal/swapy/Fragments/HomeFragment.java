@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 //                        if (homeFilterSpinner.getSelectedItem().toString() != null) {
 //                            time = homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM;
 //                        }
-                                selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                               // selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
                             }
 
                         }

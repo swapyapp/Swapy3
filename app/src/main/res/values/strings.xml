@@ -60,6 +60,8 @@
     <!-- Notification Message -->
     <string name="notification_message">wants to swap his shift with your</string>
     <string name="any_time">any time</string>
+    <string name="create_account">Create Account</string>
+    <string name="send_swap_req">Send Requisite</string>
 
 
     <string-array name="company">
