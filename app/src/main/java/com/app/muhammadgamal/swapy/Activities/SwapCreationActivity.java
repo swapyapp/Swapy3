@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -186,6 +187,7 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String chosenDateString = dateFormat.format(c.getTime());
         edit_text_shift_date.setText(chosenDateString);
+        edit_text_shift_date.setError(null);
     }
 
     //add the swap to FireBase RealTime database
@@ -215,7 +217,7 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
             edit_text_shift_date.requestFocus();
             return;
         }
-        if (shifts_time_spinner.getSelectedItem().toString().equals("Shift's time")) {
+        if (shifts_time_spinner.getSelectedItem().toString().equals("Shift")) {
             Toast.makeText(getApplicationContext(), "choose your shift's time", Toast.LENGTH_SHORT).show();
             return;
         }
