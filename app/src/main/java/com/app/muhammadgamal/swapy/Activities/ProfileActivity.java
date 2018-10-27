@@ -104,11 +104,14 @@ public class ProfileActivity extends AppCompatActivity {
         buttonSwapRequest.bringToFront();
         progressBar = (ProgressBar) findViewById(R.id.progressBar_profile);
 
+
         //if the user opens his swap the swap request button view will be gone
         if (swapperID.equals(currentUserId)){
             buttonSwapRequest.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
         }
+
+
 
         tryButton = findViewById(R.id.button2);
         tryButton.setOnClickListener(new View.OnClickListener() {
@@ -124,13 +127,13 @@ public class ProfileActivity extends AppCompatActivity {
                         addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
-                        Toast.makeText(ProfileActivity.this,"Notification sent", Toast.LENGTH_LONG );
+                        Toast.makeText(ProfileActivity.this,"Notification sent", Toast.LENGTH_LONG ).show();
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ProfileActivity.this,"somthing went wrong", Toast.LENGTH_LONG );
+                        Toast.makeText(ProfileActivity.this,"somthing went wrong", Toast.LENGTH_LONG ).show();
                         Log.e(LOG_TAG, "Failed to insert row for " + currentUserId);
                     }
                 });
@@ -152,7 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
                 mFireStore.collection("Users/" + swapperID + "notification").add(notificationMessage).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
-                        Toast.makeText(ProfileActivity.this,"Notification sent", Toast.LENGTH_LONG );
+                        Toast.makeText(ProfileActivity.this,"Notification sent", Toast.LENGTH_LONG ).show();
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
