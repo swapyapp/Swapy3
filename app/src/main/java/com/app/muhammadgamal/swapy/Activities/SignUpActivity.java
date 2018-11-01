@@ -75,13 +75,14 @@ public class SignUpActivity extends AppCompatActivity  {
 
         Resources res = getResources();
 
-
-
         signInText = (TextView) findViewById(R.id.signInText);
         signInText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
             }
         });
 

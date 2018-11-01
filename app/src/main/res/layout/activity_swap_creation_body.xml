@@ -106,6 +106,7 @@
                     android:id="@+id/edit_text_shift_date"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
                     android:hint="@string/example_date"
                     android:clickable="true"
                     android:editable="false"
@@ -162,6 +163,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/am"
                         android:textColor="#ffffff"
+                        android:fontFamily="@font/raleway_semi_bold"
                         android:textSize="@dimen/button_text_size" />
 
                 </RelativeLayout>
@@ -180,7 +182,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/pm"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/button_text_size" />
+                        android:textSize="@dimen/button_text_size"
+                        android:fontFamily="@font/raleway_semi_bold" />
 
                 </RelativeLayout>
 
@@ -270,7 +273,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/am"
                         android:textColor="#ffffff"
-                        android:textSize="@dimen/button_text_size" />
+                        android:textSize="@dimen/button_text_size"
+                        android:fontFamily="@font/raleway_semi_bold" />
 
                 </RelativeLayout>
 
@@ -288,7 +292,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/pm"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/button_text_size" />
+                        android:textSize="@dimen/button_text_size"
+                        android:fontFamily="@font/raleway_semi_bold" />
 
                 </RelativeLayout>
 
