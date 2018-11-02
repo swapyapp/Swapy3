@@ -25,6 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -46,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView swapDone;
     //The FireBase store that will contain the map of the notifications for each user with his ID
     private FirebaseFirestore mFireStore;
+    private DatabaseReference notificationDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
         final String currentUserId = mAuth.getCurrentUser().getUid();
 
         mFireStore = FirebaseFirestore.getInstance();
+        notificationDB = FirebaseDatabase.getInstance().getReference().child("Notifications");
 
         Intent intent = getIntent();
         SwapDetails swapDetails = intent.getParcelableExtra("swapper info");
@@ -124,14 +128,15 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         //if the user opens his swap the swap request button view will be gone
-        if (swapperID.equals(currentUserId)){
+        if (swapperID.equals(currentUserId)) {
             buttonSwapRequest.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
         }
 
         swapDone = findViewById(R.id.textSentOrAcceptedRequest);
 
-        buttonSwapRequest.setOnClickListener(new View.OnClickListener() {
+        buttonSwapRequest.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 buttonSwapRequest.setVisibility(View.INVISIBLE);
@@ -141,21 +146,46 @@ public class ProfileActivity extends AppCompatActivity {
                 notificationMessage.put("message", requestMessage);
                 notificationMessage.put("from", currentUserId);
 
-                mFireStore.collection("Users/" + swapperID + "/Notification").add(notificationMessage).
-                        addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                Toast.makeText(ProfileActivity.this,"Notification sent", Toast.LENGTH_LONG ).show();
-                                progressBar.setVisibility(View.INVISIBLE);
-                                swapDone.setVisibility(View.VISIBLE);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
+                notificationDB.child(swapperID).push()
+                        .setValue(notificationMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful())
+                        {
+                            Toast.makeText(ProfileActivity.this, "Notification sent", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            swapDone.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ProfileActivity.this,"somthing went wrong", Toast.LENGTH_LONG ).show();
+                        Toast.makeText(ProfileActivity.this,"Something went wrong", Toast.LENGTH_LONG ).show();
                         Log.e(LOG_TAG, "Failed to insert row for " + currentUserId);
                     }
                 });
+
+            /*    mFireStore.collection("Users/" + swapperID + "/Notification").add(notificationMessage).
+                        addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                if (task.isSuccessful())
+                                {
+                                    Toast.makeText(ProfileActivity.this, "Notification sent", Toast.LENGTH_LONG).show();
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    swapDone.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ProfileActivity.this,"Something went wrong", Toast.LENGTH_LONG ).show();
+                        Log.e(LOG_TAG, "Failed to insert row for " + currentUserId);
+                    }
+                });
+
+            */
             }
         });
     }
