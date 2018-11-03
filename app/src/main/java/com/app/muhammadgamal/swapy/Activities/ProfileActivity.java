@@ -101,10 +101,6 @@ public class ProfileActivity extends AppCompatActivity {
         String swapperPreferredShift = swapDetails.getSwapperPreferredShift();
 
 
-        //set the request message
-       //requestMessage = swapperName + "" +(R.string.notification_message);
-        requestMessage = swapperName + "" + "wants to swap his shift with your";
-
         progressBarProfileActivityImage = (ProgressBar) findViewById(R.id.progressBarProfileActivityImage);
         profileUserImg = (CircleImageView) findViewById(R.id.profileUserImg);
         progressBarProfileActivityImage.setVisibility(View.VISIBLE);
@@ -166,10 +162,13 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonSwapRequest.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
+                //set the request message
+                //requestMessage = swapperName + "" +(R.string.notification_message);
+                requestMessage = userName + "" + " wants to swap his shift with your";
 
                 Map <String, Object> notificationMessage = new HashMap<>();
                 notificationMessage.put("message", requestMessage);
-                notificationMessage.put("from", userName);
+                notificationMessage.put("from", currentUserId);
 
                 notificationDB.child(swapperID).push()
                         .setValue(notificationMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
