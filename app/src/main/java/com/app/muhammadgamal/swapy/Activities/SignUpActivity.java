@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,14 +58,15 @@ public class SignUpActivity extends AppCompatActivity  {
     static int REQUESTCODE = 1;
     static int IMG_UPLOADED = 0;
     static int USER_INFO_SAVED = 0;
-    TextView signInText;
+    TextView signInText, currentTimePMText, currentTimeAMText;
     Button signUpButton;
     ImageView userImageSignUp;
     Uri pickedImageUri;
-    EditText editTextEmail, editTextPassword, editTextConfirmPassword, editTextFirstName, editTextPhone, editTextLoginId, editTextLastName;
+    EditText editTextEmail, editTextPassword, editTextConfirmPassword, editTextName, editTextPhone;
     String profileImageUrl;
-    Spinner spinnerCompany, spinnerCompanyBranch, spinnerAccount;
+    Spinner spinnerCompany, spinnerCompanyBranch, spinnerAccount, currentShiftSpinner;
     ProgressBar progressBarImg;
+    RelativeLayout currentTimeAM, currentTimePM;
     private FirebaseAuth mAuth;
 
     @Override
@@ -89,20 +91,45 @@ public class SignUpActivity extends AppCompatActivity  {
         progressBarImg = (ProgressBar) findViewById(R.id.progressBarImg);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
-        editTextLastName = (EditText) findViewById(R.id.editTextLastName);
+        editTextName = (EditText) findViewById(R.id.editTextName);
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
         editTextConfirmPassword = (EditText) findViewById(R.id.editTextConfirmPassword);
-        editTextLoginId = (EditText) findViewById(R.id.editTextLoginId);
+        currentTimePMText = (TextView) findViewById(R.id.currentTimePMText);
+        currentTimeAMText = (TextView) findViewById(R.id.currentTimeAMText);
         spinnerCompany = (Spinner) findViewById(R.id.spinnerCompany);
         spinnerCompanyBranch = (Spinner) findViewById(R.id.spinnerCompanyBranch);
 
         companySpinner();
+        currentShiftSpinner();
         accountSpinner();
         branchSpinner();
 
         final Drawable notSelectedBackground = res.getDrawable(R.drawable.selection_background_light);
         final Drawable SelectedBackground = res.getDrawable(R.drawable.selection_background);
+
+        currentTimeAM = (RelativeLayout) findViewById(R.id.currentTimeAM);
+        currentTimeAM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TIME_SELECTED = 0;
+                currentTimeAM.setBackground(SelectedBackground);
+                currentTimePM.setBackground(notSelectedBackground);
+                currentTimeAMText.setTextColor(getResources().getColor(R.color.white));
+                currentTimePMText.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        });
+
+        currentTimePM = (RelativeLayout) findViewById(R.id.currentTimePM);
+        currentTimePM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TIME_SELECTED = 1;
+                currentTimePM.setBackground(SelectedBackground);
+                currentTimeAM.setBackground(notSelectedBackground);
+                currentTimePMText.setTextColor(getResources().getColor(R.color.white));
+                currentTimeAMText.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        });
 
         signUpButton = (Button) findViewById(R.id.buttonSignUp);
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +191,14 @@ public class SignUpActivity extends AppCompatActivity  {
         spinnerAccount.setOnItemSelectedListener(new AccountSpinnerLestiner());
     }
 
+    private void currentShiftSpinner() {
+        currentShiftSpinner = findViewById(R.id.currentShiftSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.current_Shift, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        currentShiftSpinner.setAdapter(adapter);
+        currentShiftSpinner.setOnItemSelectedListener(new CurrentShiftSpinnerLestiner());
+    }
+
     private void saveUserInfoToFirebaseDatabase() {
         String AMorPM;
         if (TIME_SELECTED == 0) {
@@ -178,13 +213,12 @@ public class SignUpActivity extends AppCompatActivity  {
         String deviceToken = FirebaseInstanceId.getInstance().getToken();
         String email = editTextEmail.getText().toString().trim();
         String userId = mAuth.getCurrentUser().getUid();
-        String loginID = editTextLoginId.getText().toString().trim();
         User user;
         DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
         currentUserDb.child("Users").child("device_token").setValue(deviceToken);
         if (profileImageUrl != null) {
             signUpButton.setVisibility(View.GONE);
-            user = new User(username, email, loginID, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift + AMorPM, profileImageUrl, 0,0,0);
+            user = new User(username, email, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift + AMorPM, profileImageUrl, 0,0,0);
             currentUserDb.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -204,7 +238,7 @@ public class SignUpActivity extends AppCompatActivity  {
             });
         } else {
             signUpButton.setVisibility(View.GONE);
-            user = new User(firstName, email, loginID, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift, null, 0,0,0);
+            user = new User(username, email, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift, null, 0,0,0);
             currentUserDb.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -298,52 +332,25 @@ public class SignUpActivity extends AppCompatActivity  {
         String email = editTextEmail.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
         String confirmPassword = editTextConfirmPassword.getText().toString().trim();
-        String firstName = editTextFirstName.getText().toString().trim();
-        String lastName = editTextLastName.getText().toString().trim();
+        String userName = editTextName.getText().toString();
         final String phoneNumber = editTextPhone.getText().toString();
-        String loginId = editTextLoginId.getText().toString().trim();
-        if (firstName.isEmpty()) {
-            editTextFirstName.setError("First name is required");
-            editTextFirstName.requestFocus();
-            return;
-        }
-        if (lastName.isEmpty()) {
-            editTextFirstName.setError("Last name is required");
-            editTextFirstName.requestFocus();
+        if (userName.isEmpty()) {
+            editTextName.setError("Please enter your Name");
+            editTextName.requestFocus();
             return;
         }
         if (email.isEmpty()) {
-            editTextEmail.setError("Email is required");
+            editTextEmail.setError("Please enter your email");
             editTextEmail.requestFocus();
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError("Valid email  is required");
+            editTextEmail.setError("Please enter a valid email");
             editTextEmail.requestFocus();
-            return;
-        }
-        if (!email.endsWith(".org")){
-            editTextEmail.setError("Company email is required");
-            editTextEmail.requestFocus();
-            return;
-        }
-        if (loginId.isEmpty()){
-            editTextLoginId.setError("Login ID is required");
-            editTextLoginId.requestFocus();
-            return;
-        }
-        if (phoneNumber.isEmpty()) {
-            editTextPhone.setError("Phone number is required");
-            editTextPhone.requestFocus();
-            return;
-        }
-        if (phoneNumber.length() != 11) {
-            editTextPhone.setError("Please enter a valid phone number");
-            editTextPhone.requestFocus();
             return;
         }
         if (password.isEmpty()) {
-            editTextPassword.setError("Password is required");
+            editTextPassword.setError("Please enter your password");
             editTextPassword.requestFocus();
             return;
         }
@@ -353,7 +360,7 @@ public class SignUpActivity extends AppCompatActivity  {
             return;
         }
         if (confirmPassword.isEmpty()) {
-            editTextConfirmPassword.setError("Confirm your password");
+            editTextConfirmPassword.setError("Please confirm your password");
             editTextConfirmPassword.requestFocus();
             return;
         }
@@ -362,8 +369,18 @@ public class SignUpActivity extends AppCompatActivity  {
             editTextConfirmPassword.requestFocus();
             return;
         }
+        if (phoneNumber.isEmpty()) {
+            editTextPhone.setError("Please enter your phone number");
+            editTextPhone.requestFocus();
+            return;
+        }
+        if (phoneNumber.length() < 11) {
+            editTextPhone.setError("Please enter a valid phone number");
+            editTextPhone.requestFocus();
+            return;
+        }
         if (COMPANY_CHOSEN == 1) {
-            Toast.makeText(this, "choose a Branch", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "choose a companyBranch", Toast.LENGTH_SHORT).show();
             return;
         }
         if (BRANCH_CHOSEN == 1) {
@@ -372,6 +389,10 @@ public class SignUpActivity extends AppCompatActivity  {
         }
         if (ACCOUNT_CHOSEN == 1) {
             Toast.makeText(this, "choose an account", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (CURREN_SHIFT_CHOSEN == 1) {
+            Toast.makeText(this, "choose your current shift", Toast.LENGTH_SHORT).show();
             return;
         }
 

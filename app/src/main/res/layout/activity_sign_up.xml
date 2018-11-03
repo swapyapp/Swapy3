@@ -29,7 +29,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/add_photo" />
+                android:src="@drawable/male_circle_512" />
 
             <ProgressBar
                 android:id="@+id/progressBarImg"
@@ -41,43 +41,17 @@
 
         </RelativeLayout>
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/editTextName"
             android:layout_width="265dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editTextFirstName"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/edittext_style"
-                android:hint="@string/first_name"
-                android:textSize="@dimen/editText_text_size"
-                android:fontFamily="@font/roboto_condensed_regular"
-                android:inputType="textCapWords"
-                android:layout_marginEnd="2dp"/>
-
-            <EditText
-                android:id="@+id/editTextLastName"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/edittext_style"
-                android:hint="@string/last_name"
-                android:textSize="@dimen/editText_text_size"
-                android:fontFamily="@font/roboto_condensed_regular"
-                android:inputType="textCapWords"
-                android:layout_marginStart="2dp"/>
-
-
-        </LinearLayout>
-
-
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/edittext_style"
+            android:hint="@string/name"
+            android:textSize="@dimen/editText_text_size"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:inputType="textCapWords"/>
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -86,32 +60,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="4dp"
             android:background="@drawable/edittext_style"
-            android:hint="@string/email2"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:textSize="@dimen/editText_text_size"
-            android:fontFamily="@font/roboto_condensed_regular" />
-
-        <EditText
-            android:id="@+id/editTextLoginId"
-            android:layout_width="265dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/edittext_style"
-            android:hint="@string/login_id"
-            android:inputType="number"
-            android:textSize="@dimen/editText_text_size"
-            android:fontFamily="@font/roboto_condensed_regular" />
-
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="265dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/edittext_style"
-            android:hint="@string/phone"
-            android:inputType="phone"
             android:textSize="@dimen/editText_text_size"
             android:fontFamily="@font/roboto_condensed_regular" />
 
@@ -140,7 +90,17 @@
             android:textSize="@dimen/editText_text_size"
             android:fontFamily="@font/roboto_condensed_regular" />
 
-
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="265dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/edittext_style"
+            android:hint="@string/phone"
+            android:inputType="phone"
+            android:textSize="@dimen/editText_text_size"
+            android:fontFamily="@font/roboto_condensed_regular" />
 
         <Spinner
             android:id="@+id/spinnerCompany"
@@ -169,6 +129,83 @@
             android:layout_marginBottom="4dp"
             android:background="@drawable/spinner_style"
             android:fontFamily="@font/raleway_medium" />
+
+        <LinearLayout
+            android:layout_width="265dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/currentShiftSpinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.6"
+                android:background="@drawable/spinner_style"
+                android:fontFamily="@font/raleway_medium">
+
+            </Spinner>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:id="@+id/currentTimeAM"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/selection_background"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/currentTimeAMText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/am"
+                            android:fontFamily="@font/raleway_medium"
+                            android:textColor="#ffffff"
+                            android:textSize="@dimen/button_text_size" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:id="@+id/currentTimePM"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/selection_background_light"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/currentTimePMText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pm"
+                            android:fontFamily="@font/raleway_medium"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/button_text_size" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"

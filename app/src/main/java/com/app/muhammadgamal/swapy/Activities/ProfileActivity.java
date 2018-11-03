@@ -5,18 +5,15 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.muhammadgamal.swapy.Fragments.HomeFragment;
 import com.app.muhammadgamal.swapy.R;
 import com.app.muhammadgamal.swapy.SwapData.SwapDetails;
 import com.app.muhammadgamal.swapy.SwapData.User;
@@ -49,7 +46,6 @@ public class ProfileActivity extends AppCompatActivity {
     CircleImageView profileUserImg;
     TextView userProfileName, companyBranch, account, currentShift, preferredShift, userEmail, userPhone, textSentOrAcceptedRequest;
     Button buttonSwapRequest;
-    ImageView img_back_profile;
     ProgressBar progressBar, progressBarProfileActivityImage;
     private FirebaseAuth mAuth;
     private String requestMessage;
@@ -92,8 +88,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         progressBarProfileActivityImage = (ProgressBar) findViewById(R.id.progressBarProfileActivityImage);
         profileUserImg = (CircleImageView) findViewById(R.id.profileUserImg);
+        progressBarProfileActivityImage.setVisibility(View.VISIBLE);
         if (swapperImageUrl != null){
-            progressBarProfileActivityImage.setVisibility(View.VISIBLE);
             Glide.with(ProfileActivity.this)
                     .load(swapperImageUrl)
                     .listener(new RequestListener<Drawable>() {
@@ -115,14 +111,6 @@ public class ProfileActivity extends AppCompatActivity {
             Drawable photoUrl = resources.getDrawable(R.drawable.male_circle_512);
             profileUserImg.setImageDrawable(photoUrl);
         }
-
-        img_back_profile = (ImageView) findViewById(R.id.img_back_profile);
-        img_back_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         userProfileName = (TextView) findViewById(R.id.userProfileName);
         userProfileName.setText(swapperName);
