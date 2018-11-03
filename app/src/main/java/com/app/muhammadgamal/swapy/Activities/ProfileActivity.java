@@ -25,11 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-<<<<<<< HEAD
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-=======
->>>>>>> parent of 88f9bc2... Fic some bugs
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -54,11 +51,8 @@ public class ProfileActivity extends AppCompatActivity {
     //The FireBase store that will contain the map of the notifications for each user with his ID
     private FirebaseFirestore mFireStore;
     private DatabaseReference notificationDB;
-<<<<<<< HEAD
     private DatabaseReference databaseReference;
     private String userName;
-=======
->>>>>>> parent of 88f9bc2... Fic some bugs
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
