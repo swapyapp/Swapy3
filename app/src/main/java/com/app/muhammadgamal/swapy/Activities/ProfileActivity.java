@@ -200,28 +200,6 @@ public class ProfileActivity extends AppCompatActivity {
                         Log.e(LOG_TAG, "Failed to insert row for " + currentUserId);
                     }
                 });
-
-            /*    mFireStore.collection("Users/" + swapperID + "/Notification").add(notificationMessage).
-                        addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                if (task.isSuccessful())
-                                {
-                                    Toast.makeText(ProfileActivity.this, "Notification sent", Toast.LENGTH_LONG).show();
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                    swapDone.setVisibility(View.VISIBLE);
-                                }
-                            }
-
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ProfileActivity.this,"Something went wrong", Toast.LENGTH_LONG ).show();
-                        Log.e(LOG_TAG, "Failed to insert row for " + currentUserId);
-                    }
-                });
-
-            */
             }
         });
     }
