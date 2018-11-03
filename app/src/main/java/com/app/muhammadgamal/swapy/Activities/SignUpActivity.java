@@ -171,17 +171,11 @@ public class SignUpActivity extends AppCompatActivity  {
         } else {
             AMorPM = " PM";
         }
-<<<<<<< HEAD
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
         String username = firstName + " " + lastName;
         String phoneNumber = editTextPhone.getText().toString().trim();
-=======
-
         String deviceToken = FirebaseInstanceId.getInstance().getToken();
-        String username = editTextName.getText().toString();
-        String phoneNumber = editTextPhone.getText().toString();
->>>>>>> 88f9bc253bc4c11463e51f0e69a47ba77ec39f11
         String email = editTextEmail.getText().toString().trim();
         String userId = mAuth.getCurrentUser().getUid();
         String loginID = editTextLoginId.getText().toString().trim();
