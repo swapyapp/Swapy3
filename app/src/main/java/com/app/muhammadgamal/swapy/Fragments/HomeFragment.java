@@ -18,6 +18,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,29 +59,28 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    String zatona;
-    static int PREFERRED_TIME_SELECTED = 0; // 0 => AM & 1 => PM
-    ImageView imgFilter;
-    Dialog filterDialog;
-    ImageView imgCloseFilterDialog;
+    private static int PREFERRED_TIME_SELECTED = 0; // 0 => AM & 1 => PM
+    private ImageView imgFilter;
+    private Dialog filterDialog;
+    private ImageView imgCloseFilterDialog;
     // List view that represent teh swap data
-    ListView swapList;
-    TextView empty_view, empty_view2, filterPreferredTimePMText, filterPreferredTimeAMText, selectedPreferredTime;
-    SwipeRefreshLayout homeSwipeRefresh;
-    FloatingActionButton fab_add_swap;
-    NetworkInfo networkInfo;
-    ConnectivityManager cm;
-    DatabaseReference mSwapDataBaseReference;
-    FirebaseDatabase mFirebaseDatabase;
-    Button homeSwapButton, buttonApplyFilter;
-    View rootView;
-    ListView listView;
-    Spinner homeFilterSpinner;
-    String userId, preferredShift, preferredAMorPM = null, currentUserAccount, currentUserCompanyBranch;
-    RelativeLayout filterPreferredTimeAM, filterPreferredTimePM;
+    private ListView swapList;
+    private TextView empty_view, empty_view2, filterPreferredTimePMText, filterPreferredTimeAMText, selectedPreferredTime;
+    private SwipeRefreshLayout homeSwipeRefresh;
+    private FloatingActionButton fab_add_swap;
+    private NetworkInfo networkInfo;
+    private ConnectivityManager cm;
+    private DatabaseReference mSwapDataBaseReference;
+    private FirebaseDatabase mFirebaseDatabase;
+    private Button homeSwapButton, buttonApplyFilter;
+    private View rootView;
+    private ListView listView;
+    private Spinner homeFilterSpinner;
+    private String userId, preferredShift, preferredAMorPM = null, currentUserAccount, currentUserCompanyBranch;
+    private RelativeLayout filterPreferredTimeAM, filterPreferredTimePM;
     private SwapAdapter swapAdapter;
     private ProgressBar progressBar;
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private User user;
 
 
@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 //                        if (homeFilterSpinner.getSelectedItem().toString() != null) {
 //                            time = homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM;
 //                        }
-                               // selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
+                                selectedPreferredTime.setText(homeFilterSpinner.getSelectedItem().toString() + preferredAMorPM);
                             }
 
                         }
@@ -252,7 +252,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     View cardView = view.findViewById(R.id.listItemCardView);
                     Pair<View, String> p1 = Pair.create(swapper_image, imageTransitionName);
                     Pair<View, String> p2 = Pair.create(cardView, listItemTransitionName);
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), p1, p2);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), swapper_image, ViewCompat.getTransitionName(swapper_image));
 
 
                     SwapDetails swapDetails = swapBodyList.get(adapterView.getCount() - i - 1);

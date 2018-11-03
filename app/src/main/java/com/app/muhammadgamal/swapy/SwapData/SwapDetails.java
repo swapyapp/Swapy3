@@ -18,6 +18,8 @@ public class SwapDetails implements Parcelable {
     private String swapShiftDate;
     private String swapperTeamLeader;
     private String swapperID;
+    private String swapperLoginID;
+
 
     public SwapDetails() {
     }
@@ -34,6 +36,7 @@ public class SwapDetails implements Parcelable {
 //    }
 
     public SwapDetails(String swapperID,
+                       String swapperLoginID,
                        String swapperName,
                        String swapperEmail,
                        String swapperPhone,
@@ -43,8 +46,8 @@ public class SwapDetails implements Parcelable {
                        String swapperShiftDay,
                        String swapShiftDate,
                        String swapperShiftTime,
-                       String swapperTeamLeader,
                        String swapperPreferredShift) {
+        this.swapperLoginID = swapperLoginID;
         this.swapperShiftTime = swapperShiftTime;
         this.swapperShiftDay = swapperShiftDay;
         this.swapperPreferredShift = swapperPreferredShift;
@@ -61,6 +64,7 @@ public class SwapDetails implements Parcelable {
 
 
     protected SwapDetails(Parcel in) {
+        swapperLoginID = in.readString();
         swapperImageUrl = in.readString();
         swapperName = in.readString();
         swapperEmail = in.readString();
@@ -194,6 +198,14 @@ public class SwapDetails implements Parcelable {
         this.swapperAccount = swapperAccount;
     }
 
+    public String getSwapperLoginID() {
+        return swapperLoginID;
+    }
+
+    public void setSwapperLoginID(String swapperLoginID) {
+        this.swapperLoginID = swapperLoginID;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -214,5 +226,6 @@ public class SwapDetails implements Parcelable {
         parcel.writeString(swapShiftDate);
         parcel.writeString(swapperTeamLeader);
         parcel.writeString(swapperID);
+        parcel.writeString(swapperLoginID);
     }
 }
