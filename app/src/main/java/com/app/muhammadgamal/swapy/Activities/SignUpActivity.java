@@ -39,6 +39,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -170,15 +171,23 @@ public class SignUpActivity extends AppCompatActivity  {
         } else {
             AMorPM = " PM";
         }
+<<<<<<< HEAD
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
         String username = firstName + " " + lastName;
         String phoneNumber = editTextPhone.getText().toString().trim();
+=======
+
+        String deviceToken = FirebaseInstanceId.getInstance().getToken();
+        String username = editTextName.getText().toString();
+        String phoneNumber = editTextPhone.getText().toString();
+>>>>>>> 88f9bc253bc4c11463e51f0e69a47ba77ec39f11
         String email = editTextEmail.getText().toString().trim();
         String userId = mAuth.getCurrentUser().getUid();
         String loginID = editTextLoginId.getText().toString().trim();
         User user;
         DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        currentUserDb.child("Users").child("device_token").setValue(deviceToken);
         if (profileImageUrl != null) {
             signUpButton.setVisibility(View.GONE);
             user = new User(username, email, loginID, phoneNumber, CompanySpinnerLestiner.company, BranchSpinnerLestiner.Branch, AccountSpinnerLestiner.Account, CurrentShiftSpinnerLestiner.CurrentShift + AMorPM, profileImageUrl, 0,0,0);
