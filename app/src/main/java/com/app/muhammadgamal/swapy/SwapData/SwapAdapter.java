@@ -59,6 +59,7 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
 
 //        String userId = "";
         if (swapBody != null) {
+
             swapperShiftTime.setText(swapBody.getSwapperShiftTime());
             swapperShiftDay.setText(swapBody.getSwapperShiftDay());
             swapperPreferredShift.setText(swapBody.getSwapperPreferredShift());
@@ -82,6 +83,7 @@ public class SwapAdapter extends ArrayAdapter<SwapDetails> {
                         })
                         .into(swapperImage);
             }else {
+                progressBarListItem.setVisibility(View.GONE);
                 // set the swapper Image to default if no image provided
                 Resources resources = context.getResources();
                 Drawable photoUrl = resources.getDrawable(R.drawable.male_circle_512);

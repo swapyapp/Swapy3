@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
 
-    private String mUsername,mEmail, mCompany, mBranch, mAccount, mCurrentShift, mProfilePhotoURL, mPhoneNumber;
+    private String mUsername,mEmail, mCompany, mBranch, mAccount, mCurrentShift, mProfilePhotoURL, mPhoneNumber, mLoginID;
     private int mSentRequests, mReceivedRequests, mAcceptedRequests;
 
     public  User(){
@@ -14,6 +14,7 @@ public class User implements Parcelable {
 
     public User(String username,
                 String email,
+                String loginID,
                 String phoneNumber,
                 String company,
                 String branch,
@@ -23,6 +24,7 @@ public class User implements Parcelable {
                 int sentRequests,
                 int receivedRequests,
                 int acceptedRequests){
+        mLoginID = loginID;
         mUsername = username;
         mEmail = email;
         mPhoneNumber = phoneNumber;
@@ -39,6 +41,7 @@ public class User implements Parcelable {
     protected User(Parcel in) {
         mUsername = in.readString();
         mEmail = in.readString();
+        mLoginID = in.readString();
         mCompany = in.readString();
         mBranch = in.readString();
         mAccount = in.readString();
@@ -61,6 +64,14 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
+    public String getmLoginID() {
+        return mLoginID;
+    }
+
+    public void setmLoginID(String mLoginID) {
+        this.mLoginID = mLoginID;
+    }
 
     public String getmUsername() {
         return mUsername;

@@ -41,14 +41,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingBottom="50dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="50dp"
             android:fontFamily="@font/raleway_medium"
             android:text="@string/your_current_shift"
             android:textColor="#000000"
@@ -190,38 +191,13 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:fontFamily="@font/raleway_semi_bold"
-                android:text="@string/team_leader"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/edit_text_team_leader_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/your_team_leader_s_name"
-                android:inputType="textCapWords"
-                android:background="@drawable/edittext_style"
-                android:textSize="@dimen/editText_text_size"/>
-
-        </LinearLayout>
-
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/raleway_medium"
             android:text="@string/preferred_shift_2"
             android:textColor="#000000"

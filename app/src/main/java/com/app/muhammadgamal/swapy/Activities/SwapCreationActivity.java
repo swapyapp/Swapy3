@@ -49,10 +49,10 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
     ImageView img_back_creation_body, img_save_creation_body;
     Spinner shifts_day_spinner, shifts_time_spinner, preferred_time_spinner;
     RelativeLayout creationBodyShiftTimeAM, creationBodyShiftTimePM, creationBodyPreferredTimeAM, creationBodyPreferredTimePM;
-    EditText edit_text_shift_date, edit_text_team_leader_name;
+    EditText edit_text_shift_date;
     TextView creationBodyShiftTimeAMText, creationBodyShiftTimePMText, creationBodyPreferredTimeAMText, creationBodyPreferredTimePMText;
     ProgressBar creation_body_progress_bar;
-    String userId, swapperImageUrl, swapperName, swapperEmail, swapperPhone;
+    String userId, swapperImageUrl, swapperName, swapperEmail, swapperPhone, swapperLoginID;
     public static String currentUserCompanyBranch, currentUserAccount;
 
     @Override
@@ -77,7 +77,6 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
                 datePicker.show(getSupportFragmentManager(), "date picker");
             }
         });
-        edit_text_team_leader_name = (EditText) findViewById(R.id.edit_text_team_leader_name);
 
         creation_body_progress_bar = (ProgressBar) findViewById(R.id.creation_body_progress_bar);
 
@@ -143,9 +142,7 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
         img_back_creation_body.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NavDrawerActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                finish();
             }
         });
         img_save_creation_body = (ImageView) findViewById(R.id.img_save_creation_body);
@@ -206,7 +203,6 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
         final String shiftDay = shifts_day_spinner.getSelectedItem().toString();
         final String shiftDate = edit_text_shift_date.getText().toString().trim();
         final String shiftTime = shifts_time_spinner.getSelectedItem().toString() + shiftAMorPM;
-        final String teamLeader = edit_text_team_leader_name.getText().toString();
         final String preferredShift = preferred_time_spinner.getSelectedItem().toString() + preferredAMorPM;
         if (shifts_day_spinner.getSelectedItem().toString().equals("Day")) {
             Toast.makeText(getApplicationContext(), "choose a day", Toast.LENGTH_SHORT).show();
@@ -219,11 +215,6 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
         }
         if (shifts_time_spinner.getSelectedItem().toString().equals("Shift")) {
             Toast.makeText(getApplicationContext(), "choose your shift's time", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (teamLeader.isEmpty()) {
-            edit_text_team_leader_name.setError("Enter your team leader's name");
-            edit_text_team_leader_name.requestFocus();
             return;
         }
         if (preferred_time_spinner.getSelectedItem().toString().equals("Preferred shift")) {
@@ -244,9 +235,10 @@ public class SwapCreationActivity extends AppCompatActivity implements DatePicke
                 swapperPhone = user.getmPhoneNumber();
                 currentUserCompanyBranch = user.getmBranch();
                 currentUserAccount = user.getmAccount();
+                swapperLoginID = user.getmLoginID();
 
                 swapperEmail = mAuth.getCurrentUser().getEmail();
-                SwapDetails SwapDetails = new SwapDetails(userId, swapperName, swapperEmail, swapperPhone, currentUserCompanyBranch, currentUserAccount, swapperImageUrl, shiftDay, shiftDate, shiftTime, teamLeader, preferredShift);
+                SwapDetails SwapDetails = new SwapDetails(userId, swapperLoginID, swapperName, swapperEmail, swapperPhone, currentUserCompanyBranch, currentUserAccount, swapperImageUrl, shiftDay, shiftDate, shiftTime, preferredShift);
                 creation_body_progress_bar.setVisibility(View.VISIBLE);
                 img_save_creation_body.setVisibility(View.GONE);
                 databaseReference.push().setValue(SwapDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
