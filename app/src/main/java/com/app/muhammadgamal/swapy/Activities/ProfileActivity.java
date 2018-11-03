@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.app.muhammadgamal.swapy.R;
 import com.app.muhammadgamal.swapy.SwapData.SwapDetails;
+import com.app.muhammadgamal.swapy.SwapData.User;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -25,8 +26,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -46,9 +51,12 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String requestMessage;
     private TextView swapDone;
+    private DatabaseReference databaseReference;
     //The FireBase store that will contain the map of the notifications for each user with his ID
     private FirebaseFirestore mFireStore;
     private DatabaseReference notificationDB;
+
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +69,26 @@ public class ProfileActivity extends AppCompatActivity {
         mFireStore = FirebaseFirestore.getInstance();
         notificationDB = FirebaseDatabase.getInstance().getReference().child("Notifications");
 
+        databaseReference = (DatabaseReference) FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
+
+       databaseReference.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot) {
+               User user = dataSnapshot.getValue(User.class);
+               userName = user.getmUsername();
+           }
+
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
+
+           }
+       });
+
         Intent intent = getIntent();
         SwapDetails swapDetails = intent.getParcelableExtra("swapper info");
         final String swapperID = swapDetails.getSwapperID();
         final String swapperName = swapDetails.getSwapperName();
+
         String swapperEmail = swapDetails.getSwapperEmail();
         String swapperPhone = swapDetails.getSwapperPhone();
         String swapperCompanyBranch = swapDetails.getSwapperCompanyBranch();
@@ -78,7 +102,8 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         //set the request message
-        requestMessage = swapperName + "" +(R.string.notification_message);
+       //requestMessage = swapperName + "" +(R.string.notification_message);
+        requestMessage = swapperName + "" + "wants to swap his shift with your";
 
         progressBarProfileActivityImage = (ProgressBar) findViewById(R.id.progressBarProfileActivityImage);
         profileUserImg = (CircleImageView) findViewById(R.id.profileUserImg);
@@ -144,7 +169,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 Map <String, Object> notificationMessage = new HashMap<>();
                 notificationMessage.put("message", requestMessage);
-                notificationMessage.put("from", currentUserId);
+                notificationMessage.put("from", userName);
 
                 notificationDB.child(swapperID).push()
                         .setValue(notificationMessage).addOnCompleteListener(new OnCompleteListener<Void>() {
