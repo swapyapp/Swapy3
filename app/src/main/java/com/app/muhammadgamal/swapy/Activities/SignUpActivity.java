@@ -176,10 +176,10 @@ public class SignUpActivity extends AppCompatActivity  {
 //            spinnerCompanyBranch.setOnItemSelectedListener(new BranchSpinnerLestiner());
 //        }
 //        else {
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.branch, android.R.layout.simple_spinner_item);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerCompanyBranch.setAdapter(adapter);
-            spinnerCompanyBranch.setOnItemSelectedListener(new BranchSpinnerLestiner());
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.branch, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCompanyBranch.setAdapter(adapter);
+        spinnerCompanyBranch.setOnItemSelectedListener(new BranchSpinnerLestiner());
 //        }
     }
 
